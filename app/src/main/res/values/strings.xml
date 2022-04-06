@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Aqi Check</string>
+
+    <string name="general_error">Something went wrong :(</string>
+
+    <string name="main_navigation_list">List</string>
+    <string name="main_navigation_favorites">Favorites</string>
+</resources>
