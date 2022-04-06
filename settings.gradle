@@ -17,5 +17,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "Aqi Check"
+rootProject.name = "Log4TS"
 include ':app'

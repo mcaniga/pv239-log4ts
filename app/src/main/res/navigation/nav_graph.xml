@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="cz.muni.aqicheck.ui.list.ListFragment"
+        android:name="cz.muni.log4ts.ui.list.ListFragment"
         tools:layout="@layout/fragment_list"
         android:label="ListFragment" >
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="cz.muni.aqicheck.ui.favorites.FavoritesFragment"
+        android:name="cz.muni.log4ts.ui.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/fragment_favorites" >
 
@@ -30,13 +30,13 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="cz.muni.aqicheck.ui.detail.DetailFragment"
+        android:name="cz.muni.log4ts.ui.detail.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail" >
 
         <argument
             android:name="item"
-            app:argType="cz.muni.aqicheck.data.AqiPresentableListItem" />
+            app:argType="cz.muni.log4ts.data.AqiPresentableListItem" />
 
     </fragment>
 

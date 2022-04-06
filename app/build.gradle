@@ -10,7 +10,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "cz.muni.aqicheck"
+        applicationId "cz.muni.log4ts"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -40,6 +40,11 @@ android {
     }
 }
 
+// Firebase
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
+
 dependencies {
 
     // CORE UI
@@ -66,4 +71,14 @@ dependencies {
 
     // GRAPH
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+
+    // FIREBASE
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20"
+}
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
