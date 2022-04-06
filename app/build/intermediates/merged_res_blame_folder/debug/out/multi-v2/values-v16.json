@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/michal/muni/mgr/AqiCheck_public/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "/home/michal/muni/mgr/pv239-log4ts/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
                     "source": "/home/michal/.gradle/caches/transforms-3/1d8f9eb1afdf910d0c4693cb62076e14/transformed/core-1.7.0/res/values-v16/values-v16.xml",

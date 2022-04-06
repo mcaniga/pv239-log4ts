@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.muni.aqicheck"
+    package="cz.muni.log4ts"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -22,7 +22,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.AqiCheck" >
         <activity
-            android:name="cz.muni.aqicheck.MainActivity"
+            android:name="cz.muni.log4ts.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="cz.muni.aqicheck.androidx-startup"
+            android:authorities="cz.muni.log4ts.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

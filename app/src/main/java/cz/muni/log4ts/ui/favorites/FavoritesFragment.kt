@@ -1,0 +1,48 @@
+package cz.muni.log4ts.ui.favorites
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import cz.muni.log4ts.databinding.FragmentFavoritesBinding
+import cz.muni.log4ts.repository.AqiRepository
+import cz.muni.log4ts.ui.list.AqiAdapter
+
+// TODO 1.1 binding, repo, apdater
+class FavoritesFragment : Fragment() {
+
+    private lateinit var binding: FragmentFavoritesBinding
+
+    private val aqiRepository: AqiRepository by lazy {
+        AqiRepository(requireContext())
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = AqiAdapter(
+            onItemClick = {
+                findNavController()
+                    .navigate(FavoritesFragmentDirections.actionFavoritesFragmentToDetailFragment(it))
+            }
+        )
+        // TODO 1.2 update item a smazání z listu
+        adapter.onFavoriteClick = { item, position ->
+            aqiRepository.updateFavorite(item)
+            adapter.removeItem(position)
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
+
+        adapter.submitList(aqiRepository.getFavorites())
+    }
+}

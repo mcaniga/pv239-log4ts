@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "cz.muni.aqicheck",
+  "applicationId": "cz.muni.log4ts",
   "variantName": "debug",
   "elements": [
     {
