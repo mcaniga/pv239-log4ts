@@ -29,3 +29,5 @@ app/build
 
 # IDEA files
 .idea/
+
+local.properties
