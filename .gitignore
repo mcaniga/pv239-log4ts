@@ -23,3 +23,5 @@
 hs_err_pid*
 
 app/build
+
+.gradle/
