@@ -3,6 +3,7 @@
 
     <string name="general_error">Something went wrong :(</string>
 
-    <string name="main_navigation_list">List</string>
-    <string name="main_navigation_favorites">Favorites</string>
+    <string name="main_navigation_log">Log</string>
+    <string name="main_navigation_report">Report</string>
+    <string name="main_navigation_namespaces">Namespaces</string>
 </resources>
