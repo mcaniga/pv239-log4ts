@@ -6,6 +6,7 @@ import cz.muni.log4ts.util.getNowFormattedDateString
 
 /**
  * Log Repository for manipulation with mocked log items
+ * Can be used for testing the app in offline conditions
  */
 class FakeLogRepository : LogRepositoryInterface {
     override fun getLogEntriesItems(): List<LogEntriesItem> {
