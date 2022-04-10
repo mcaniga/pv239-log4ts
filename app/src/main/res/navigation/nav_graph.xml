@@ -2,7 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/logEntriesFragment">
+
+    <fragment
+        android:id="@+id/logEntriesFragment"
+        android:name="cz.muni.log4ts.ui.logEntries.LogEntriesFragment"
+        tools:layout="@layout/fragment_log_entries"
+        android:label="LogEntriesFragment" >
+    </fragment>
 
     <fragment
         android:id="@+id/listFragment"
@@ -13,7 +20,6 @@
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
-
     </fragment>
 
     <fragment

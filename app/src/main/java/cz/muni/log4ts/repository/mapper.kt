@@ -1,8 +1,18 @@
 package cz.muni.log4ts.repository
 
 import cz.muni.log4ts.data.AqiPresentableListItem
+import cz.muni.log4ts.data.entities.LogEntry
+import cz.muni.log4ts.data.ui.LogEntriesItem
 import cz.muni.log4ts.database.FavoriteStationEntity
 import cz.muni.log4ts.webservice.response.AqiListItem
+
+fun LogEntry.toLogEntriesItem(): LogEntriesItem =
+    LogEntriesItem(
+        id = this.id,
+        name = this.name,
+        project = this.project,
+        loggedSeconds = this.loggedSeconds
+    )
 
 fun AqiListItem.toAqiPresentableItem(isFavorite: Boolean): AqiPresentableListItem =
     AqiPresentableListItem(
