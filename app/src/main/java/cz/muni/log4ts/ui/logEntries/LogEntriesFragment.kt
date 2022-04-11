@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
-import cz.muni.log4ts.repository.FakeLogRepository
+import cz.muni.log4ts.repository.FirebaseLogRepository
 import cz.muni.log4ts.repository.LogRepositoryInterface
+import kotlinx.coroutines.launch
 
 class LogEntriesFragment : Fragment() {
 
@@ -16,7 +18,7 @@ class LogEntriesFragment : Fragment() {
 
     // TODO: move repository up the component hierarchy, LogEntriesFragment will get its entries as an argument
     private val logRepository: LogRepositoryInterface by lazy {
-        FakeLogRepository()
+        FirebaseLogRepository()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -32,6 +34,8 @@ class LogEntriesFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 
-        recyclerViewAdapter.submitList(logRepository.getLogEntriesItems())
+        viewLifecycleOwner.lifecycleScope.launch {
+            recyclerViewAdapter.submitList(logRepository.getLogEntriesItems())
+        }
     }
 }
