@@ -6,8 +6,8 @@ import cz.muni.log4ts.data.ui.LogEntriesItem
 import cz.muni.log4ts.util.subtractSeconds
 
 /**
- * Log Repository for manipulation with mocked log items
- * Can be used for testing the app in offline conditions
+ * Log Repository for manipulation with mocked log items.
+ * Can be used for testing the app in offline conditions.
  */
 class FakeLogRepository : LogRepositoryInterface {
     override suspend fun getLogEntriesItems(): List<LogEntriesItem> {

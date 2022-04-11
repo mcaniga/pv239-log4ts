@@ -1,7 +1,7 @@
 package cz.muni.log4ts.repository
 
-import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -9,7 +9,7 @@ import com.google.firebase.ktx.Firebase
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.ui.LogEntriesItem
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
+
 
 /**
  * Log Repository for firebase cloud storage
@@ -25,19 +25,15 @@ class FirebaseLogRepository : LogRepositoryInterface {
     }
 
     override suspend fun getLogEntriesByUserId(userId: Long): List<LogEntry> {
-        try {
-            Log.d(FirebaseLogRepository::class.simpleName, String.format("Fetching userData from Firebase with userId %d", userId))
-            val usersDataDocument :QuerySnapshot = getUserDataDocument(userId)
-            Log.d(TAG, String.format("userData are fetched, content of documents is: %s", usersDataDocument.documents))
-            val logEntriesFirebaseMap: List<MutableMap<String, Any>> =
-                extractLogEntriesOfFirstUserFromUsersDataDocuments(usersDataDocument)
-            Log.d(TAG, String.format("Raw logEntries : %s", logEntriesFirebaseMap))
-            val logEntries = logEntriesFirebaseMap.map { makeLogEntryFromFirebaseDataMap(it) }
-            Log.d(TAG, String.format("Parsed logEntries are: %s", logEntries))
-            return logEntries
-        } catch (e: Exception) {
-            throw e // TODO: do something better than rethrow...
-        }
+        Log.d(FirebaseLogRepository::class.simpleName, String.format("Fetching userData from Firebase with userId %d", userId))
+        val usersDataDocument :QuerySnapshot = getUserDataDocument(userId)
+        Log.d(TAG, String.format("userData are fetched, content of documents is: %s", usersDataDocument.documents))
+        val logEntriesFirebaseMap: List<MutableMap<String, Any>> =
+            extractLogEntriesOfFirstUserFromUsersDataDocuments(usersDataDocument)
+        Log.d(TAG, String.format("Raw logEntries : %s", logEntriesFirebaseMap))
+        val logEntries = logEntriesFirebaseMap.map { makeLogEntryFromFirebaseDataMap(it) }
+        Log.d(TAG, String.format("Parsed logEntries are: %s", logEntries))
+        return logEntries
     }
 
     private fun extractLogEntriesOfFirstUserFromUsersDataDocuments(
