@@ -45,7 +45,6 @@ class LogEntriesFragment : Fragment() {
         }
     }
 
-    // TODO: test the error handling - throw error in try block
     private suspend fun updateLogEntriesOrShowError(recyclerViewAdapter: LogEntriesRecyclerViewAdapter) {
         try {
             recyclerViewAdapter.submitList(logRepository.getLogEntriesItems())
