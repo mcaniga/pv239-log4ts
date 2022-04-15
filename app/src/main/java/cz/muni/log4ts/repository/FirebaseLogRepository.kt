@@ -10,15 +10,20 @@ import cz.muni.log4ts.data.ui.LogEntriesItem
 import cz.muni.log4ts.extension.toLogEntriesItem
 import cz.muni.log4ts.mapper.LogEntryMapper
 import okhttp3.internal.format
+import javax.inject.Inject
+import javax.inject.Singleton
 
-// TODO: use DI container
 /**
  * Log Repository for firebase cloud storage
  * Requires internet access
  */
-class FirebaseLogRepository : LogRepositoryInterface {
-    private val dao = FirebaseLogDao()
-    private val mapper = LogEntryMapper()
+@Singleton
+class FirebaseLogRepository @Inject constructor() : LogRepositoryInterface {
+    @Inject
+    lateinit var dao: FirebaseLogDao
+    @Inject
+    lateinit var mapper: LogEntryMapper
+
     private val TAG = FirebaseLogRepository::class.simpleName;
 
     override suspend fun getLogEntriesItems(): List<LogEntriesItem> {
@@ -29,7 +34,16 @@ class FirebaseLogRepository : LogRepositoryInterface {
     override suspend fun getLogEntriesByUserId(userId: String): List<LogEntry> {
         Log.d(TAG, String.format("Fetching userData from Firebase with userId %s", userId))
         val userLogEntriesDocuments: QuerySnapshot = dao.getUserLogEntriesDocuments(userId)
-        return mapper.makeLogEntriesFromLogEntriesDocuments(userId, userLogEntriesDocuments)
+        Log.d(
+            TAG,
+            String.format(
+                "logEntries documents for user are fetched, content of documents is: %s",
+                userLogEntriesDocuments.documents
+            )
+        )
+        val logEntries = mapper.makeLogEntriesFromLogEntriesDocuments(userId, userLogEntriesDocuments)
+        Log.d(TAG, String.format("Parsed logEntries are: %s", logEntries))
+        return logEntries
     }
 
     override suspend fun addLogEntry(logEntry: NewLogEntry): String {

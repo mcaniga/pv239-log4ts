@@ -6,14 +6,14 @@ import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.extension.toLogEntriesItem
 import cz.muni.log4ts.extension.toLogEntry
 import cz.muni.log4ts.repository.FirebaseLogRepository
-import cz.muni.log4ts.repository.LogRepositoryInterface
 import cz.muni.log4ts.util.ErrorHandler
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LogEntriesFragmentAction {
-    // TODO: use DI
-    private val logRepository: LogRepositoryInterface by lazy {
-        FirebaseLogRepository()
-    }
+@Singleton
+class LogEntriesFragmentAction @Inject constructor() {
+    @Inject
+    lateinit var logRepository: FirebaseLogRepository
 
     val TAG = LogEntriesFragmentAction::class.simpleName
 
