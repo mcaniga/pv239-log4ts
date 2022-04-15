@@ -1,4 +1,4 @@
-package cz.muni.log4ts.ui.logEntries
+package cz.muni.log4ts.ui.projects
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +10,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.dao.FirebaseAuthDao
-import cz.muni.log4ts.data.entities.NewLogEntry
-import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
+import cz.muni.log4ts.data.entities.NewProject
+import cz.muni.log4ts.databinding.FragmentProjectsBinding
 import cz.muni.log4ts.ui.auth.signout.SignOutFragmentAction
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LogEntriesFragment : Fragment() {
+class ProjectsFragment : Fragment() {
     @Inject
-    lateinit var logEntriesAction: LogEntriesFragmentAction
+    lateinit var projectsAction: ProjectsFragmentAction
 
     @Inject
-    lateinit var logEntriesFragmentExtractor: LogEntriesFragmentExtractor
+    lateinit var projectsFragmentExtractor: ProjectsFragmentExtractor
 
     @Inject
     lateinit var firebaseAuthDao: FirebaseAuthDao
@@ -30,48 +30,43 @@ class LogEntriesFragment : Fragment() {
     @Inject
     lateinit var signOutFragmentAction: SignOutFragmentAction;
 
-    private lateinit var binding: FragmentLogEntriesBinding
+    private lateinit var binding: FragmentProjectsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLogEntriesBinding.inflate(layoutInflater, container, false)
+        binding = FragmentProjectsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appComponent.injectLogEntriesFragmentDeps(this)
+        appComponent.injectProjectsFragmentDeps(this)
 
-        val recyclerViewAdapter = LogEntriesRecyclerViewAdapter()
+        val recyclerViewAdapter = ProjectsRecyclerViewAdapter(viewLifecycleOwner, view)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 
-        binding.logButton.setOnClickListener {
-            val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
-
-            // TODO: extract namespace from state
-            // TODO: add project picker and extract project from the picker
-            val newLogEntry: NewLogEntry = logEntriesFragmentExtractor.extractNewLogEntry(
-                binding, userId, "global", "piskanica"
+        binding.createProjectButton.setOnClickListener {
+            val newProject: NewProject = projectsFragmentExtractor.extractNewProject(
+                binding, "global" // TODO: from extract from state
             )
             viewLifecycleOwner.lifecycleScope.launch {
-                logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry, view)
+                projectsAction.addProject(recyclerViewAdapter, newProject, view)
             }
         }
 
         // TODO: move logout button to dedicated component
         binding.logoutButton.setOnClickListener {
             val navController = findNavController()
-            signOutFragmentAction.signOutFromLogEntries(navController, view)
+            signOutFragmentAction.signOutFromProjects(navController, view)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
-            logEntriesAction.getLogEntriesOrShowError(userId, recyclerViewAdapter, view)
+            projectsAction.getProjectsOrShowError("global", recyclerViewAdapter, view) // TODO: get namespace from state
         }
     }
 }

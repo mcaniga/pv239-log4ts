@@ -6,6 +6,7 @@
     <string name="main_navigation_log">Log</string>
     <string name="main_navigation_report">Report</string>
     <string name="main_navigation_namespaces">Namespaces</string>
+    <string name="main_navigation_projects">Projects</string>
     <string name="log_entries_log">Log</string>
     <string name="log_entries_hint">What are you doing?</string>
 
@@ -16,9 +17,11 @@
     <string name="register_login_text">Have an account?</string>
 
     <string name="login_signup_text">Want to create an account?</string>
-
     <string name="login_button_text">Sign In</string>
 
     <string name="logout_button_text">Log Out</string>
+
+    <string name="projects_create_project_button">+</string>
+    <string name="projects_create_project_hint">Project Name...</string>
 
 </resources>
