@@ -26,8 +26,8 @@ class FirebaseLogRepository @Inject constructor() : LogRepositoryInterface {
 
     private val TAG = FirebaseLogRepository::class.simpleName;
 
-    override suspend fun getLogEntriesItems(): List<LogEntriesItem> {
-        val logEntries = getLogEntriesByUserId("1")
+    override suspend fun getLogEntriesItems(userId: String): List<LogEntriesItem> {
+        val logEntries = getLogEntriesByUserId(userId)
         return logEntries.map { it.toLogEntriesItem() }
     }
 

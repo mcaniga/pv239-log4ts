@@ -13,6 +13,10 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val idsOfFragmentsWithHiddenNavigation: List<Int> = arrayListOf(
+        R.id.detailFragment, R.id.registerFragment, R.id.loginFragment
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNavigation.isVisible = destination.id != R.id.detailFragment
+            binding.bottomNavigation.isVisible = !idsOfFragmentsWithHiddenNavigation.any { destination.id == it }
         }
     }
 }
