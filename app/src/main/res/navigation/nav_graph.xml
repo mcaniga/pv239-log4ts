@@ -46,6 +46,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/projectsFragment"
+        android:name="cz.muni.log4ts.ui.projects.ProjectsFragment"
+        tools:layout="@layout/fragment_projects"
+        android:label="ProjectsFragment">
+
+        <action
+            android:id="@+id/action_projectsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/listFragment"
         android:name="cz.muni.log4ts.ui.list.ListFragment"
         tools:layout="@layout/fragment_list"
