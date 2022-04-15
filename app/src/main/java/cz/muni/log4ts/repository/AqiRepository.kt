@@ -4,7 +4,7 @@ import android.content.Context
 import cz.muni.log4ts.data.AqiPresentableListItem
 import cz.muni.log4ts.database.AqiDatabase
 import cz.muni.log4ts.database.FavoriteStationDao
-import cz.muni.log4ts.util.getNowFormattedDateString
+import cz.muni.log4ts.extension.getNowFormattedDateString
 import cz.muni.log4ts.webservice.AqiApi
 import cz.muni.log4ts.webservice.RetrofitUtil
 import cz.muni.log4ts.webservice.response.AqiDetailResponse

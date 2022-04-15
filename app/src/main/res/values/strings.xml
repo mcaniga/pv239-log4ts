@@ -6,4 +6,6 @@
     <string name="main_navigation_log">Log</string>
     <string name="main_navigation_report">Report</string>
     <string name="main_navigation_namespaces">Namespaces</string>
+    <string name="log_entries_log">Log</string>
+    <string name="log_entries_hint">What are you doing?</string>
 </resources>
