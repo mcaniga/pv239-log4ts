@@ -7,7 +7,9 @@ import com.google.firebase.ktx.Firebase
 import cz.muni.log4ts.data.entities.LogEntry
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FirebaseLogDao @Inject constructor() {
     private val db = Firebase.firestore
 
