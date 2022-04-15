@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val idsOfFragmentsWithHiddenNavigation: List<Int> = arrayListOf(
-        R.id.detailFragment, R.id.registerFragment, R.id.loginFragment
+        R.id.registerFragment, R.id.loginFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
