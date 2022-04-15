@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.databinding.FragmentListBinding
+import cz.muni.log4ts.extension.toast
 import cz.muni.log4ts.repository.AqiRepository
-import cz.muni.log4ts.util.toast
 
 class ListFragment : Fragment() {
 

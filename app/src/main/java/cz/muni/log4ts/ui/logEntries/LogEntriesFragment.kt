@@ -7,21 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
-import cz.muni.log4ts.repository.FirebaseLogRepository
-import cz.muni.log4ts.repository.LogRepositoryInterface
-import cz.muni.log4ts.util.ErrorHandler.StaticMethods.showErrorSnackbar
 import kotlinx.coroutines.launch
 
+// TODO: Use DI
 class LogEntriesFragment : Fragment() {
+    private val logEntriesAction = LogEntriesFragmentAction()
+    private val logEntriesFragmentExtractor = LogEntriesFragmentExtractor()
 
     private lateinit var binding: FragmentLogEntriesBinding
-    private val TAG = LogEntriesFragment::class.simpleName
-
-    // TODO: move repository up the component hierarchy, LogEntriesFragment will get its entries as an argument
-    private val logRepository: LogRepositoryInterface by lazy {
-        FirebaseLogRepository()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +35,17 @@ class LogEntriesFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            updateLogEntriesOrShowError(recyclerViewAdapter)
+        binding.logButton.setOnClickListener {
+            val newLogEntry: NewLogEntry = logEntriesFragmentExtractor.extractNewLogEntry(
+                binding, "1", "lidl", "piskanica" // TODO: from extract from state
+            )
+            viewLifecycleOwner.lifecycleScope.launch {
+                logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry)
+            }
         }
-    }
 
-    private suspend fun updateLogEntriesOrShowError(recyclerViewAdapter: LogEntriesRecyclerViewAdapter) {
-        try {
-            recyclerViewAdapter.submitList(logRepository.getLogEntriesItems())
-        } catch (e: Exception) {
-            showErrorSnackbar(e, TAG, "Fetching user data failed...", view)
+        viewLifecycleOwner.lifecycleScope.launch {
+            logEntriesAction.getLogEntriesOrShowError(recyclerViewAdapter, view)
         }
     }
 }

@@ -19,9 +19,29 @@ class LogEntriesRecyclerViewAdapter : RecyclerView.Adapter<LogEntriesViewHolder>
         holder.bind(listItems[position])
     }
 
-    fun submitList(newListItems: List<LogEntriesItem>) {
-        listItems = newListItems.toMutableList()
+    fun refreshList(items: List<LogEntriesItem>) {
+        listItems = items.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun addLogEntry(logEntry: LogEntriesItem) {
+        listItems.add(logEntry)
+        notifyDataSetChanged()
+    }
+
+    fun updateLogEntry(logEntry: LogEntriesItem) {
+        removeLogEntryById(logEntry)
+        listItems.add(logEntry)
+        notifyDataSetChanged()
+    }
+
+    fun deleteLogEntry(logEntry: LogEntriesItem) {
+        removeLogEntryById(logEntry)
+        notifyDataSetChanged()
+    }
+
+    private fun removeLogEntryById(logEntry: LogEntriesItem) {
+        listItems.removeIf{ it.id == logEntry.id }
     }
 
     override fun getItemCount(): Int = listItems.size

@@ -28,17 +28,8 @@
             tools:text="Home impl" />
 
         <TextView
-            android:id="@+id/time_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2:01:12" />
-
-        <TextView
             android:id="@+id/project_text_view"
-            android:layout_width="363dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +37,24 @@
             app:layout_constraintTop_toBottomOf="@+id/name_text_view"
             tools:text="Lidl" />
 
+        <Spinner
+            android:id="@+id/planets_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/time_text_view"
+            app:layout_constraintStart_toEndOf="@id/name_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@android:layout/simple_list_item_1" />
+
+        <TextView
+            android:id="@+id/time_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2:01:12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

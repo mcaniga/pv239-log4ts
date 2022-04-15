@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LogEntriesItem(
-    val id: Long,
+    val id: String,
     val name: String,
     val project: String,
     val loggedSeconds: Long,
