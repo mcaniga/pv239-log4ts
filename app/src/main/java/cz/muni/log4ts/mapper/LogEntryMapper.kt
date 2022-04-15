@@ -1,26 +1,17 @@
 package cz.muni.log4ts.mapper
 
-import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.entities.NewLogEntry
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LogEntryMapper {
-    val TAG = LogEntryMapper::class.simpleName
-
+@Singleton
+class LogEntryMapper @Inject constructor() {
     fun makeLogEntriesFromLogEntriesDocuments(userId: String, userLogEntriesDocuments: QuerySnapshot): List<LogEntry> {
-        Log.d(
-            TAG,
-            String.format(
-                "logEntries documents for user are fetched, content of documents is: %s",
-                userLogEntriesDocuments.documents
-            )
-        )
-        val logEntries = userLogEntriesDocuments.documents.map { makeLogEntryFromLogEntryDocument(userId, it) }
-        Log.d(TAG, String.format("Parsed logEntries are: %s", logEntries))
-        return logEntries
+        return userLogEntriesDocuments.documents.map { makeLogEntryFromLogEntryDocument(userId, it) }
     }
 
     fun makeLogEntryFromLogEntryDocument(

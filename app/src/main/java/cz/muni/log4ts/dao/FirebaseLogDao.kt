@@ -6,8 +6,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import cz.muni.log4ts.data.entities.LogEntry
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseLogDao {
+class FirebaseLogDao @Inject constructor() {
     private val db = Firebase.firestore
 
     suspend fun getUserLogEntriesDocuments(userId: String): QuerySnapshot {

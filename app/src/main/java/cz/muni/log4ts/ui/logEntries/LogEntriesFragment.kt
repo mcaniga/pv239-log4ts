@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-// TODO: Use DI
 class LogEntriesFragment : Fragment() {
-    private val logEntriesAction = LogEntriesFragmentAction()
-    private val logEntriesFragmentExtractor = LogEntriesFragmentExtractor()
+    @Inject
+    lateinit var logEntriesAction: LogEntriesFragmentAction;
+    @Inject
+    lateinit var logEntriesFragmentExtractor: LogEntriesFragmentExtractor;
 
     private lateinit var binding: FragmentLogEntriesBinding
 
@@ -29,6 +32,7 @@ class LogEntriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appComponent.injectLogEntriesFragmentDeps(this)
 
         val recyclerViewAdapter = LogEntriesRecyclerViewAdapter()
 
