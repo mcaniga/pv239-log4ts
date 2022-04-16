@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.dao.FirebaseAuthDao
 import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
-import cz.muni.log4ts.ui.auth.signout.SignOutFragmentAction
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,10 +23,6 @@ class LogEntriesFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuthDao: FirebaseAuthDao
-
-    // TODO: move logout button to dedicated component
-    @Inject
-    lateinit var signOutFragmentAction: SignOutFragmentAction;
 
     private lateinit var binding: FragmentLogEntriesBinding
 
@@ -61,12 +55,6 @@ class LogEntriesFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry, view)
             }
-        }
-
-        // TODO: move logout button to dedicated component
-        binding.logoutButton.setOnClickListener {
-            val navController = findNavController()
-            signOutFragmentAction.signOutFromLogEntries(navController, view)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

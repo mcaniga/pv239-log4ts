@@ -35,6 +35,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/headerFragment"
+        android:name="cz.muni.log4ts.ui.header.HeaderFragment"
+        tools:layout="@layout/fragment_header"
+        android:label="HeaderFragment" >
+
+        <action
+            android:id="@+id/action_headerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/logEntriesFragment"
         android:name="cz.muni.log4ts.ui.logEntries.LogEntriesFragment"
         tools:layout="@layout/fragment_log_entries"

@@ -1,5 +1,6 @@
 package cz.muni.log4ts.dao
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -14,6 +15,13 @@ class FirebaseUserDataDao @Inject constructor() {
         db
             .collection("usersData").document(userId)
             .set(data)
+            .await()
+    }
+
+    suspend fun getUserDataDocument(userId: String): DocumentSnapshot {
+        return db
+            .collection("usersData").document(userId)
+            .get()
             .await()
     }
 }
