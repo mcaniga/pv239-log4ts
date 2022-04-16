@@ -6,8 +6,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import cz.muni.log4ts.dao.FirebaseLogDao
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.entities.NewLogEntry
-import cz.muni.log4ts.data.ui.LogEntriesItem
-import cz.muni.log4ts.extension.toLogEntriesItem
 import cz.muni.log4ts.mapper.LogEntryMapper
 import okhttp3.internal.format
 import javax.inject.Inject
@@ -25,11 +23,6 @@ class FirebaseLogRepository @Inject constructor() : LogRepositoryInterface {
     lateinit var mapper: LogEntryMapper
 
     private val TAG = FirebaseLogRepository::class.simpleName;
-
-    override suspend fun getLogEntriesItems(userId: String): List<LogEntriesItem> {
-        val logEntries = getLogEntriesByUserId(userId)
-        return logEntries.map { it.toLogEntriesItem() }
-    }
 
     override suspend fun getLogEntriesByUserId(userId: String): List<LogEntry> {
         Log.d(TAG, String.format("Fetching userData from Firebase with userId %s", userId))

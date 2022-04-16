@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.R
@@ -46,7 +47,7 @@ class LogEntriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appComponent.injectLogEntriesFragmentDeps(this)
 
-        val recyclerViewAdapter = LogEntriesRecyclerViewAdapter(viewLifecycleOwner, view)
+        val recyclerViewAdapter = LogEntriesRecyclerViewAdapter(viewLifecycleOwner, view, findNavController())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 

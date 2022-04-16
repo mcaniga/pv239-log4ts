@@ -1,7 +1,7 @@
 package cz.muni.log4ts.ui.logEntries
 
 import android.view.View
-import cz.muni.log4ts.data.ui.LogEntriesItem
+import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.repository.FirebaseLogRepository
 import cz.muni.log4ts.ui.projects.ProjectsFragmentAction
 import cz.muni.log4ts.util.ErrorHandler
@@ -16,7 +16,7 @@ class LogEntriesViewHolderAction @Inject constructor() {
 
     val TAG = ProjectsFragmentAction::class.simpleName
 
-    suspend fun deleteLogEntry(recyclerViewAdapter: LogEntriesRecyclerViewAdapter, logEntry: LogEntriesItem, view: View) {
+    suspend fun deleteLogEntry(recyclerViewAdapter: LogEntriesRecyclerViewAdapter, logEntry: LogEntry, view: View) {
         try {
             logRepository.deleteLogEntry(logEntry.id, logEntry.userId)
             recyclerViewAdapter.deleteLogEntry(logEntry)
