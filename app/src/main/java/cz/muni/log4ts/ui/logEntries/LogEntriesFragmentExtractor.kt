@@ -13,12 +13,12 @@ class LogEntriesFragmentExtractor @Inject constructor() {
         binding: FragmentLogEntriesBinding,
         userId: String,
         namespace: String,
-        project: String
+        project: String,
+        loggedSeconds: Long
     ): NewLogEntry {
         val name = binding.logTextInput.text.toString()
-        val loggedSeconds = binding.logDurationTextView // TODO: parse and connect use in NewLogEntry
         val endTime = Timestamp.now()
-        val startTime = endTime.subtractSeconds(90) // TODO: subtract parsed loggedSeconds
+        val startTime = endTime.subtractSeconds(loggedSeconds)
 
         return NewLogEntry(
             userId = userId,
@@ -27,7 +27,7 @@ class LogEntriesFragmentExtractor @Inject constructor() {
             project = project,
             startTime = startTime,
             endTime = endTime,
-            loggedSeconds = 90
+            loggedSeconds = loggedSeconds
         )
     }
 }

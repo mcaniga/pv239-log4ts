@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
+import cz.muni.log4ts.R
 import cz.muni.log4ts.dao.FirebaseAuthDao
 import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
@@ -23,6 +24,12 @@ class LogEntriesFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuthDao: FirebaseAuthDao
+
+    @Inject
+    lateinit var logChronometer: LogChronometer
+
+    // TODO: move to state
+    var isChronometerRunning = false
 
     private lateinit var binding: FragmentLogEntriesBinding
 
@@ -40,26 +47,46 @@ class LogEntriesFragment : Fragment() {
         appComponent.injectLogEntriesFragmentDeps(this)
 
         val recyclerViewAdapter = LogEntriesRecyclerViewAdapter()
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 
         binding.logButton.setOnClickListener {
-            val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
-
-            // TODO: extract namespace from state
-            // TODO: add project picker and extract project from the picker
-            val newLogEntry: NewLogEntry = logEntriesFragmentExtractor.extractNewLogEntry(
-                binding, userId, "global", "piskanica"
-            )
-            viewLifecycleOwner.lifecycleScope.launch {
-                logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry, view)
+            if (isChronometerRunning) {
+                endLogging(recyclerViewAdapter, view)
+            } else {
+                startLogging()
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
             logEntriesAction.getLogEntriesOrShowError(userId, recyclerViewAdapter, view)
+        }
+    }
+
+    private fun startLogging() {
+        logChronometer.start(binding.logDurationChronometer)
+        isChronometerRunning = true
+        binding.logButton.text = getString(R.string.log_button_stop)
+    }
+
+    private fun endLogging(
+        recyclerViewAdapter: LogEntriesRecyclerViewAdapter,
+        view: View
+    ) {
+        val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
+        val elapsedSeconds = logChronometer.stop(binding.logDurationChronometer)
+        isChronometerRunning = false
+
+        // TODO: extract namespace from state
+        // TODO: add project picker and extract project from the picker
+        val newLogEntry: NewLogEntry = logEntriesFragmentExtractor.extractNewLogEntry(
+            binding, userId, "global", "piskanica", elapsedSeconds
+        )
+
+        binding.logButton.text = getString(R.string.log_button_log)
+        viewLifecycleOwner.lifecycleScope.launch {
+            logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry, view)
         }
     }
 }
