@@ -24,4 +24,7 @@
     <string name="projects_create_project_button">+</string>
     <string name="projects_create_project_hint">Project Name...</string>
 
+    <string name="log_button_log">Log</string>
+    <string name="log_button_stop">Stop</string>
+
 </resources>
