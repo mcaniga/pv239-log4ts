@@ -1,12 +1,14 @@
 package cz.muni.log4ts.ui.logEntries
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import cz.muni.log4ts.data.ui.LogEntriesItem
 import cz.muni.log4ts.databinding.ItemLogListBinding
 
-class LogEntriesRecyclerViewAdapter : RecyclerView.Adapter<LogEntriesViewHolder>() {
+class LogEntriesRecyclerViewAdapter(val viewLifecycleOwner: LifecycleOwner, val view: View) : RecyclerView.Adapter<LogEntriesViewHolder>() {
 
     private var listItems: MutableList<LogEntriesItem> = mutableListOf()
 
@@ -16,7 +18,7 @@ class LogEntriesRecyclerViewAdapter : RecyclerView.Adapter<LogEntriesViewHolder>
     }
 
     override fun onBindViewHolder(holder: LogEntriesViewHolder, position: Int) {
-        holder.bind(listItems[position])
+        holder.bind(listItems[position], this, view, viewLifecycleOwner)
     }
 
     fun refreshList(items: List<LogEntriesItem>) {

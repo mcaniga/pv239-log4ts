@@ -66,13 +66,13 @@ class FirebaseLogRepository @Inject constructor() : LogRepositoryInterface {
         Log.d(TAG, "Successfully updated the log entry")
     }
 
-    override suspend fun deleteLogEntry(logEntry: LogEntry) {
+    override suspend fun deleteLogEntry(id: String, userId: String) {
         Log.d(
             TAG, String.format(
-                "Deleting log entry %s to userData in Firebase with userId %s", logEntry, logEntry.userId
+                "Deleting log entry %s to userData in Firebase with userId %s", id, userId
             )
         )
-        dao.deleteLogEntryDocument(logEntry)
+        dao.deleteLogEntryDocument(id, userId)
         Log.d(TAG, "Successfully deleted the log entry")
     }
 }
