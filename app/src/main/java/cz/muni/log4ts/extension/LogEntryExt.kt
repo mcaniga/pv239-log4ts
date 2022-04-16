@@ -6,6 +6,7 @@ import cz.muni.log4ts.data.ui.LogEntriesItem
 fun LogEntry.toLogEntriesItem() =
     LogEntriesItem(
         id = this.id,
+        userId = this.userId,
         name = this.name,
         project = this.project,
         loggedSeconds = this.loggedSeconds

@@ -9,5 +9,5 @@ interface LogRepositoryInterface {
     suspend fun getLogEntriesByUserId(userId: String): List<LogEntry>
     suspend fun addLogEntry(logEntry: NewLogEntry): String
     suspend fun updateLogEntry(logEntry: LogEntry)
-    suspend fun deleteLogEntry(logEntry: LogEntry)
+    suspend fun deleteLogEntry(id: String, userId: String)
 }

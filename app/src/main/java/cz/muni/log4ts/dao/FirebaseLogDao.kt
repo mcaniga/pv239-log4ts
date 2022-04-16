@@ -40,10 +40,10 @@ class FirebaseLogDao @Inject constructor() {
             .await()
     }
 
-    suspend fun deleteLogEntryDocument(logEntry: LogEntry) {
+    suspend fun deleteLogEntryDocument(id: String, userId: String) {
         db
-            .collection("usersData").document(logEntry.userId)
-            .collection("logEntries").document(logEntry.id)
+            .collection("usersData").document(userId)
+            .collection("logEntries").document(id)
             .delete()
             .await()
     }

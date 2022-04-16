@@ -5,6 +5,7 @@ import cz.muni.log4ts.ui.auth.login.LoginFragment
 import cz.muni.log4ts.ui.auth.register.RegisterFragment
 import cz.muni.log4ts.ui.header.HeaderFragment
 import cz.muni.log4ts.ui.logEntries.LogEntriesFragment
+import cz.muni.log4ts.ui.logEntries.LogEntriesViewHolder
 import cz.muni.log4ts.ui.projects.ProjectsFragment
 import cz.muni.log4ts.ui.projects.ProjectsViewHolder
 import dagger.Component
@@ -17,6 +18,7 @@ interface ApplicationComponent {
     fun injectLoginFragmentDeps(loginFragment: LoginFragment)
     fun injectRegisterFragmentDeps(registerFragment: RegisterFragment)
     fun injectProjectsFragmentDeps(projectsFragment: ProjectsFragment)
+    fun injectLogEntriesViewHolderDeps(logEntriesViewHolder: LogEntriesViewHolder)
     fun injectProjectsViewHolderDeps(projectsViewHolder: ProjectsViewHolder)
     fun injectHeaderFragmentDeps(headerFragment: HeaderFragment)
 }

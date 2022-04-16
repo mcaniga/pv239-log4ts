@@ -46,7 +46,7 @@ class LogEntriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appComponent.injectLogEntriesFragmentDeps(this)
 
-        val recyclerViewAdapter = LogEntriesRecyclerViewAdapter()
+        val recyclerViewAdapter = LogEntriesRecyclerViewAdapter(viewLifecycleOwner, view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
 
