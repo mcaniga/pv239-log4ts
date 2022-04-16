@@ -2,8 +2,8 @@ package cz.muni.log4ts.ui.auth.signout
 
 import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import cz.muni.log4ts.dao.FirebaseAuthDao
-import cz.muni.log4ts.ui.auth.register.RegisterFragmentDirections
 import cz.muni.log4ts.ui.logEntries.LogEntriesFragmentDirections
 import cz.muni.log4ts.ui.projects.ProjectsFragmentDirections
 import cz.muni.log4ts.util.ErrorHandler
@@ -11,11 +11,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SignOutFragmentAction @Inject constructor() {
+class HeaderFragmentAction @Inject constructor() {
     @Inject
     lateinit var authDao: FirebaseAuthDao
 
-    private val TAG = SignOutFragmentAction::class.simpleName
+    private val TAG = HeaderFragmentAction::class.simpleName
+
+    fun signOut(navController: NavController, view: View, signOutDirections: NavDirections) {
+        try {
+            authDao.signOut()
+            navController.navigate(signOutDirections)
+        } catch (e: Exception) {
+            ErrorHandler.showErrorSnackbar(e, TAG, "Sign out failed...", view)
+        }
+    }
 
     fun signOutFromLogEntries(navController: NavController, view: View) {
         try {
