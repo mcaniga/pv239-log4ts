@@ -3,7 +3,6 @@ package cz.muni.log4ts.ui.logEntries
 import android.util.Log
 import android.view.View
 import cz.muni.log4ts.data.entities.NewLogEntry
-import cz.muni.log4ts.extension.toLogEntriesItem
 import cz.muni.log4ts.extension.toLogEntry
 import cz.muni.log4ts.repository.FirebaseLogRepository
 import cz.muni.log4ts.util.ErrorHandler
@@ -21,7 +20,7 @@ class LogEntriesFragmentAction @Inject constructor() {
         try {
             val logEntryId: String =  logRepository.addLogEntry(newLogEntry)
             val logEntry = newLogEntry.toLogEntry(logEntryId)
-            recyclerViewAdapter.addLogEntry(logEntry.toLogEntriesItem())
+            recyclerViewAdapter.addLogEntry(logEntry)
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Adding of log entry failed...", view)
         }
@@ -34,9 +33,9 @@ class LogEntriesFragmentAction @Inject constructor() {
     ) {
         try {
             Log.d(TAG, "Getting log entries items...")
-            val logEntriesItems = logRepository.getLogEntriesItems(userId)
+            val logEntries = logRepository.getLogEntriesByUserId(userId)
             Log.d(TAG, "Got log entries items, refreshing list...")
-            recyclerViewAdapter.refreshList(logEntriesItems)
+            recyclerViewAdapter.refreshList(logEntries)
             Log.d(TAG, "Log entries list was successfully refreshed")
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Fetching log entries failed...", view)

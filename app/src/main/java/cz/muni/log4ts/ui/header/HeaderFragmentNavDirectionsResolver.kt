@@ -1,18 +1,23 @@
 package cz.muni.log4ts.ui.header
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import cz.muni.log4ts.ui.logEntries.LogEntriesFragment
 import cz.muni.log4ts.ui.logEntries.LogEntriesFragmentDirections
 import cz.muni.log4ts.ui.projects.ProjectsFragment
 import cz.muni.log4ts.ui.projects.ProjectsFragmentDirections
+import okhttp3.internal.format
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class HeaderFragmentNavDirectionsResolver @Inject constructor() {
+    val TAG = HeaderFragmentNavDirectionsResolver::class.simpleName
+
     fun getSignOutDirections(headerFragment: Fragment): NavDirections {
         val parentFragmentName =  getParentFragmentName(headerFragment)
+        Log.d(TAG, format("Parent fragment name is: %s", parentFragmentName))
         return getSignOutDirectionsByParentFragmentName(parentFragmentName)
     }
 

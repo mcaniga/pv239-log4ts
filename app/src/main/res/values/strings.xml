@@ -27,4 +27,8 @@
     <string name="log_button_log">Log</string>
     <string name="log_button_stop">Stop</string>
 
+    <string name="log_edit_name_hint">Log entry name</string>
+    <string name="log_edit_project_hint">Project</string>
+    <string name="log_edit_submit_button">Submit</string>
+
 </resources>
