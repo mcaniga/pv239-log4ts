@@ -69,6 +69,10 @@
         <action
             android:id="@+id/action_projectsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_projectsFragment_to_projectDetailFragment"
+            app:destination="@id/projectDetailFragment" />
     </fragment>
 
     <fragment
@@ -80,6 +84,18 @@
         <argument
             android:name="item"
             app:argType="cz.muni.log4ts.data.entities.LogEntry" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/projectDetailFragment"
+        android:name="cz.muni.log4ts.ui.projects.detail.ProjectDetailFragment"
+        tools:layout="@layout/fragment_project_edit"
+        android:label="ProjectDetailFragment">
+
+        <argument
+            android:name="item"
+            app:argType="cz.muni.log4ts.data.entities.Project" />
 
     </fragment>
 

@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.databinding.ItemLogListBinding
 import cz.muni.log4ts.databinding.ItemProjectListBinding
 
-class ProjectsRecyclerViewAdapter(val viewLifecycleOwner: LifecycleOwner, val view: View) : RecyclerView.Adapter<ProjectsViewHolder>() {
+class ProjectsRecyclerViewAdapter(val viewLifecycleOwner: LifecycleOwner, val view: View, val navController: NavController) : RecyclerView.Adapter<ProjectsViewHolder>() {
 
     private var listItems: MutableList<Project> = mutableListOf()
 
@@ -19,7 +20,7 @@ class ProjectsRecyclerViewAdapter(val viewLifecycleOwner: LifecycleOwner, val vi
     }
 
     override fun onBindViewHolder(holder: ProjectsViewHolder, position: Int) {
-        holder.bind(listItems[position], this, view, viewLifecycleOwner)
+        holder.bind(listItems[position], this, view, viewLifecycleOwner, navController)
     }
 
     fun refreshList(items: List<Project>) {
