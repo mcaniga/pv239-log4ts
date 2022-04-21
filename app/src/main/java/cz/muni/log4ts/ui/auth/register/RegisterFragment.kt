@@ -13,6 +13,7 @@ import cz.muni.log4ts.databinding.FragmentRegisterBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// TODO: detect if user is offline, if is then show offline indicator, and don't let him sign in
 class RegisterFragment: Fragment() {
     @Inject
     lateinit var registerFragmentAction: RegisterFragmentAction;

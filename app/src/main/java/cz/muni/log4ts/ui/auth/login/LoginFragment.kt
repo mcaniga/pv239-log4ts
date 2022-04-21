@@ -13,6 +13,8 @@ import cz.muni.log4ts.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// TODO: detect if user is offline, if is then show offline indicator, and don't let him sign in
+// TODO: switching between fragments (eg. in click on bottom bar icon, or back arrow) during incompleted CRUD with firebase causes app crash, catch the exception and act appropriately
 class LoginFragment: Fragment() {
     @Inject
     lateinit var loginFragmentAction: LoginFragmentAction;
