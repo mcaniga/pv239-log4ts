@@ -7,7 +7,7 @@
     <string name="main_navigation_report">Report</string>
     <string name="main_navigation_namespaces">Namespaces</string>
     <string name="main_navigation_projects">Projects</string>
-    <string name="log_entries_log">Log</string>
+    <string name="log_entries_log">Start</string>
     <string name="log_entries_hint">What are you doing?</string>
 
     <string name="register_input_email_hint">Email</string>

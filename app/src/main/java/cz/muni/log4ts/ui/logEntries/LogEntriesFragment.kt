@@ -1,5 +1,9 @@
 package cz.muni.log4ts.ui.logEntries
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
-import cz.muni.log4ts.R
 import cz.muni.log4ts.dao.FirebaseAuthDao
 import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
+import cz.muni.log4ts.service.TimerService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,13 +28,12 @@ class LogEntriesFragment : Fragment() {
     lateinit var logEntriesFragmentExtractor: LogEntriesFragmentExtractor
 
     @Inject
-    lateinit var firebaseAuthDao: FirebaseAuthDao
+    lateinit var logTimerUIHandler: LogTimerUIHandler
 
     @Inject
-    lateinit var logChronometer: LogChronometer
+    lateinit var firebaseAuthDao: FirebaseAuthDao
 
-    // TODO: move to state
-    var isChronometerRunning = false
+    private var logTimerState = LogTimerState()
 
     private lateinit var binding: FragmentLogEntriesBinding
 
@@ -52,7 +55,7 @@ class LogEntriesFragment : Fragment() {
         binding.recyclerView.adapter = recyclerViewAdapter
 
         binding.logButton.setOnClickListener {
-            if (isChronometerRunning) {
+            if (logTimerState.timerStarted) {
                 endLogging(recyclerViewAdapter, view)
             } else {
                 startLogging()
@@ -63,29 +66,44 @@ class LogEntriesFragment : Fragment() {
             val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
             logEntriesAction.getLogEntriesOrShowError(userId, recyclerViewAdapter, view)
         }
+
+        logTimerState.serviceIntent = Intent(requireContext(), TimerService::class.java)
+        subscribeToTimerUpdatedEvent()
+    }
+
+    private fun subscribeToTimerUpdatedEvent() {
+        requireActivity().registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
+    }
+
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver()
+    {
+        override fun onReceive(context: Context, intent: Intent)
+        {
+            logTimerState.time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
+            binding.logDurationTextView.text = logTimerState.getTimeString()
+            if (logTimerState.time != 0.0) {
+                binding.logButton.text = "Stop"
+            }
+        }
     }
 
     private fun startLogging() {
-        logChronometer.start(binding.logDurationChronometer)
-        isChronometerRunning = true
-        binding.logButton.text = getString(R.string.log_button_stop)
+        logTimerUIHandler.startTimer(logTimerState, binding, requireActivity())
     }
 
     private fun endLogging(
         recyclerViewAdapter: LogEntriesRecyclerViewAdapter,
         view: View
     ) {
-        val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
-        val elapsedSeconds = logChronometer.stop(binding.logDurationChronometer)
-        isChronometerRunning = false
+        val elapsedSeconds = logTimerUIHandler.stopTimer(logTimerState, binding, requireActivity())
 
+        val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
         // TODO: extract namespace from state
         // TODO: add project picker and extract project from the picker
         val newLogEntry: NewLogEntry = logEntriesFragmentExtractor.extractNewLogEntry(
             binding, userId, "global", "piskanica", elapsedSeconds
         )
 
-        binding.logButton.text = getString(R.string.log_button_log)
         viewLifecycleOwner.lifecycleScope.launch {
             logEntriesAction.addLogEntry(recyclerViewAdapter, newLogEntry, view)
         }
