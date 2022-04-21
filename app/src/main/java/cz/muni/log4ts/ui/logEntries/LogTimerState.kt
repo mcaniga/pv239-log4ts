@@ -8,21 +8,14 @@ class LogTimerState {
         const val INITIAL_TIME = 0.0
     }
 
-    var timerStarted = false
     lateinit var serviceIntent: Intent
     var time = INITIAL_TIME
-
-    fun startTimer() {
-        timerStarted = true;
-    }
-
-    fun stopTimer() {
-        timerStarted = false
-    }
 
     fun refreshTime() {
         time = INITIAL_TIME
     }
+
+    fun isTimerRunning() = time > 0.0
 
     fun getTimeString(): String {
         val resultInt = time.roundToInt()

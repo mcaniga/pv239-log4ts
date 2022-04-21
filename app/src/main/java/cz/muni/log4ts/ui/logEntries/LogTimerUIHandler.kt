@@ -17,7 +17,6 @@ class LogTimerUIHandler @Inject constructor() {
         logTimerState.serviceIntent.putExtra(TimerService.TIME_EXTRA, logTimerState.time)
         activity.startService(logTimerState.serviceIntent)
         binding.logButton.text = STOP_LOG_BUTTON_TEXT
-        logTimerState.startTimer()
     }
 
     fun stopTimer(
@@ -33,7 +32,6 @@ class LogTimerUIHandler @Inject constructor() {
     }
 
     private fun refreshTimerState(logTimerState: LogTimerState) {
-        logTimerState.stopTimer()
         logTimerState.refreshTime()
     }
 

@@ -16,16 +16,6 @@ class LogEntriesFragmentAction @Inject constructor() {
 
     val TAG = LogEntriesFragmentAction::class.simpleName
 
-    suspend fun addLogEntry(recyclerViewAdapter: LogEntriesRecyclerViewAdapter, newLogEntry: NewLogEntry, view: View) {
-        try {
-            val logEntryId: String =  logRepository.addLogEntry(newLogEntry)
-            val logEntry = newLogEntry.toLogEntry(logEntryId)
-            recyclerViewAdapter.addLogEntry(logEntry)
-        } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Adding of log entry failed...", view)
-        }
-    }
-
     suspend fun getLogEntriesOrShowError(
         userId: String,
         recyclerViewAdapter: LogEntriesRecyclerViewAdapter,
