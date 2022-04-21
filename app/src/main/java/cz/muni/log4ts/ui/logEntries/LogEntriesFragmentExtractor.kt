@@ -9,25 +9,5 @@ import javax.inject.Singleton
 
 @Singleton
 class LogEntriesFragmentExtractor @Inject constructor() {
-    fun extractNewLogEntry(
-        binding: FragmentLogEntriesBinding,
-        userId: String,
-        namespace: String,
-        project: String,
-        loggedSeconds: Long
-    ): NewLogEntry {
-        val name = binding.logTextInput.text.toString()
-        val endTime = Timestamp.now()
-        val startTime = endTime.subtractSeconds(loggedSeconds)
 
-        return NewLogEntry(
-            userId = userId,
-            name = name,
-            namespace = namespace,
-            project = project,
-            startTime = startTime,
-            endTime = endTime,
-            loggedSeconds = loggedSeconds
-        )
-    }
 }
