@@ -17,6 +17,7 @@ class LogEntriesDetailFragmentAction @Inject constructor() {
     suspend fun editLogEntry(logEntry: LogEntry, view: View) {
         try {
             logRepository.updateLogEntry(logEntry)
+            ErrorHandler.showActionWasSucessfullSnackbar(view)
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Editing of log entry failed...", view)
         }

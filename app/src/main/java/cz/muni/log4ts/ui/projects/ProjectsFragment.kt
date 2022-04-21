@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.dao.FirebaseAuthDao
@@ -39,7 +40,7 @@ class ProjectsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appComponent.injectProjectsFragmentDeps(this)
 
-        val recyclerViewAdapter = ProjectsRecyclerViewAdapter(viewLifecycleOwner, view)
+        val recyclerViewAdapter = ProjectsRecyclerViewAdapter(viewLifecycleOwner, view, findNavController())
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter

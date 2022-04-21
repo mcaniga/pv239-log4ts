@@ -31,4 +31,6 @@
     <string name="log_edit_project_hint">Project</string>
     <string name="log_edit_submit_button">Submit</string>
 
+    <string name="project_edit_name_hint">Project entry name</string>
+
 </resources>

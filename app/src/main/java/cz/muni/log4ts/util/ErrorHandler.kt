@@ -1,5 +1,6 @@
 package cz.muni.log4ts.util
 
+import android.graphics.Color.GREEN
 import android.util.Log
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
@@ -17,5 +18,15 @@ class ErrorHandler {
                 view?.let { Snackbar.make(it, errorMsg, Snackbar.LENGTH_LONG) }
             snack?.show()
         }
+
+        fun showActionWasSucessfullSnackbar(view: View?) {
+            Log.e("StaticMethods", "Showing action was sucessfull in snackbar")
+            val snack =
+                view?.let { Snackbar.make(it, SUCCESSFUL_ACTION_TEXT, Snackbar.LENGTH_LONG) }
+            snack?.setBackgroundTint(GREEN);
+            snack?.show()
+        }
+
+        private const val SUCCESSFUL_ACTION_TEXT = "Action was successful";
     }
 }
