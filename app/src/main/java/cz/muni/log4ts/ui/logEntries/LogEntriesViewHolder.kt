@@ -32,9 +32,7 @@ class LogEntriesViewHolder(private val binding: ItemLogListBinding):
         binding.timeTextView.text = DateUtils.formatElapsedTime(listItem.loggedSeconds)
         binding.projectTextView.text = listItem.project
         binding.editButton.setOnClickListener {
-            navController.navigate(
-                LogEntriesFragmentDirections.actionLogEntriesFragmentToLogEntriesDetailFragment(listItem)
-            )
+            logEntriesViewHolderAction.navigateToLogDetail(navController, listItem, view)
         }
         binding.deleteButton.setOnClickListener {
             deleteLogEntry(adapter, view, viewLifecycleOwner, listItem)

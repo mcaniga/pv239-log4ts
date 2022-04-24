@@ -34,14 +34,12 @@ class RegisterFragment: Fragment() {
         binding.registerButton.setOnClickListener {
             val newUser: NewUser = registerFragmentExtractor.extractNewUser(binding)
             viewLifecycleOwner.lifecycleScope.launch {
-                val navController = findNavController()
-                registerFragmentAction.registerUser(navController, newUser, view)
+                registerFragmentAction.registerUser(findNavController(), newUser, view)
             }
         }
 
         binding.registerLoginTextView.setOnClickListener {
-            val navController = findNavController()
-            navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+            registerFragmentAction.navigateToLogin(findNavController(), view)
         }
     }
 }

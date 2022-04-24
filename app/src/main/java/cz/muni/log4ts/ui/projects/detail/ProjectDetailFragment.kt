@@ -12,6 +12,8 @@ import cz.muni.log4ts.R
 import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.databinding.FragmentProjectEditBinding
 import cz.muni.log4ts.repository.FirebaseProjectRepository
+import cz.muni.log4ts.util.ErrorHandler
+import cz.muni.log4ts.util.ErrorHandler.StaticMethods.safelyNavigateUp
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +28,7 @@ class ProjectDetailFragment : Fragment() {
     @Inject
     lateinit var firebaseProjectRepository: FirebaseProjectRepository
 
+    private val TAG = ProjectDetailFragment::class.simpleName
 
     private lateinit var binding: FragmentProjectEditBinding
 
@@ -45,7 +48,7 @@ class ProjectDetailFragment : Fragment() {
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            safelyNavigateUp(findNavController(), TAG, view)
         }
 
         binding.nameInput.setText(project.name)

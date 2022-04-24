@@ -14,6 +14,7 @@ import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.databinding.FragmentLogNewBinding
 import cz.muni.log4ts.repository.FirebaseProjectRepository
 import cz.muni.log4ts.ui.projects.detail.ProjectSpinnerAdapterFactory
+import cz.muni.log4ts.util.ErrorHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,6 +36,8 @@ class NewLogEntryFragment : Fragment() {
 
     private lateinit var binding: FragmentLogNewBinding
 
+    private val TAG = NewLogEntryFragment::class.simpleName
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,7 +54,7 @@ class NewLogEntryFragment : Fragment() {
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            ErrorHandler.safelyNavigateUp(findNavController(), TAG, view)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

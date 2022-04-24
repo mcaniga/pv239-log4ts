@@ -3,7 +3,9 @@ package cz.muni.log4ts.util
 import android.graphics.Color.GREEN
 import android.util.Log
 import android.view.View
+import androidx.navigation.NavController
 import com.google.android.material.snackbar.Snackbar
+import cz.muni.log4ts.ui.logEntries.LogEntriesFragmentDirections
 
 class ErrorHandler {
     companion object StaticMethods {
@@ -25,6 +27,14 @@ class ErrorHandler {
                 view?.let { Snackbar.make(it, SUCCESSFUL_ACTION_TEXT, Snackbar.LENGTH_LONG) }
             snack?.setBackgroundTint(GREEN);
             snack?.show()
+        }
+
+        fun safelyNavigateUp(navController: NavController, tag: String?, view: View) {
+            try {
+                navController.navigateUp()
+            } catch (e: Exception) {
+                showErrorSnackbar(e, tag, "Cannot navigate up...", view)
+            }
         }
 
         private const val SUCCESSFUL_ACTION_TEXT = "Action was successful";

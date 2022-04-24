@@ -23,4 +23,12 @@ class RegisterFragmentAction @Inject constructor() {
             ErrorHandler.showErrorSnackbar(e, TAG, "Register failed...", view)
         }
     }
+
+    fun navigateToLogin(navController: NavController, view: View) {
+        try {
+            navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+        } catch (e: Exception) {
+            ErrorHandler.showErrorSnackbar(e, TAG, "Navigation to login failed...", view)
+        }
+    }
 }

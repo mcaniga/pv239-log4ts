@@ -1,6 +1,7 @@
 package cz.muni.log4ts.ui.logEntries
 
 import android.view.View
+import androidx.navigation.NavController
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.repository.FirebaseLogRepository
 import cz.muni.log4ts.ui.projects.ProjectsFragmentAction
@@ -22,6 +23,20 @@ class LogEntriesViewHolderAction @Inject constructor() {
             recyclerViewAdapter.deleteLogEntry(logEntry)
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Delete of log entry failed...", view)
+        }
+    }
+
+    fun navigateToLogDetail(
+        navController: NavController,
+        listItem: LogEntry,
+        view: View
+    ) {
+        try {
+            navController.navigate(
+                LogEntriesFragmentDirections.actionLogEntriesFragmentToLogEntriesDetailFragment(listItem)
+            )
+        } catch (e: Exception) {
+            ErrorHandler.showErrorSnackbar(e, TAG, "Navigation to log detail failed...", view)
         }
     }
 }

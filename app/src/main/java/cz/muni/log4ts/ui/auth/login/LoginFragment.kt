@@ -41,8 +41,7 @@ class LoginFragment: Fragment() {
         }
 
         binding.loginSignupTextView.setOnClickListener {
-            val navController = findNavController()
-            navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+            loginFragmentAction.navigateToRegisterFragment(findNavController(), view)
         }
     }
 }
