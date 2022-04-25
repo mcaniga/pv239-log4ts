@@ -21,6 +21,11 @@ class ErrorHandler {
             snack?.show()
         }
 
+        fun showOfflineSnackbar(view: View?) {
+            val snack = view?.let { Snackbar.make(it, "App is offline", Snackbar.LENGTH_LONG) }
+            snack?.show()
+        }
+
         fun showActionWasSucessfullSnackbar(view: View?) {
             Log.e("StaticMethods", "Showing action was sucessfull in snackbar")
             val snack =
