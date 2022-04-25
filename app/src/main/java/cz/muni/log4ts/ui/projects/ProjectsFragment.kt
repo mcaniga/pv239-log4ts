@@ -25,6 +25,9 @@ class ProjectsFragment : Fragment() {
     @Inject
     lateinit var firebaseAuthDao: FirebaseAuthDao
 
+    @Inject
+    lateinit var projectValidator: ProjectValidator
+
     private lateinit var binding: FragmentProjectsBinding
 
     override fun onCreateView(
@@ -38,24 +41,57 @@ class ProjectsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appComponent.injectProjectsFragmentDeps(this)
-
+        injectDependencies()
         val recyclerViewAdapter = ProjectsRecyclerViewAdapter(viewLifecycleOwner, view, findNavController())
+        setRecyclerView(recyclerViewAdapter)
+        createProjectOnCreateButtonClick(recyclerViewAdapter, view)
+        getProjects(recyclerViewAdapter, view)
+    }
 
+    private fun getProjects(
+        recyclerViewAdapter: ProjectsRecyclerViewAdapter,
+        view: View
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            projectsAction.getProjectsOrShowError(
+                "global",
+                recyclerViewAdapter,
+                view
+            ) // TODO: get namespace from state
+        }
+    }
+
+    private fun injectDependencies() {
+        appComponent.injectProjectsFragmentDeps(this)
+    }
+
+    private fun setRecyclerView(recyclerViewAdapter: ProjectsRecyclerViewAdapter) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
+    }
 
+    private fun createProjectOnCreateButtonClick(
+        recyclerViewAdapter: ProjectsRecyclerViewAdapter,
+        view: View
+    ) {
+        validateInputAfterChange()
         binding.createProjectButton.setOnClickListener {
-            val newProject: NewProject = projectsFragmentExtractor.extractNewProject(
-                binding, "global" // TODO: from extract from state
-            )
-            viewLifecycleOwner.lifecycleScope.launch {
-                projectsAction.addProject(recyclerViewAdapter, newProject, view)
+            if (isInputValid()) {
+                val newProject: NewProject = projectsFragmentExtractor.extractNewProject(
+                    binding, "global" // TODO: from extract from state
+                )
+                viewLifecycleOwner.lifecycleScope.launch {
+                    projectsAction.addProject(recyclerViewAdapter, newProject, view)
+                }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            projectsAction.getProjectsOrShowError("global", recyclerViewAdapter, view) // TODO: get namespace from state
-        }
+    private fun validateInputAfterChange() {
+        projectValidator.validateNameAfterInputChange(binding)
+    }
+
+    private fun isInputValid(): Boolean {
+        return projectValidator.validateName(binding)
     }
 }

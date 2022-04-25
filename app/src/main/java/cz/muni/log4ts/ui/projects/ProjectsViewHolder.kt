@@ -31,17 +31,35 @@ class ProjectsViewHolder(
         viewLifecycleOwner: LifecycleOwner,
         navController: NavController
     ) {
+        inicializeProjectNameInput(listItem)
+        navigateToDetailOnEditButtonClick(navController, listItem)
+        deleteProjectOnDeleteButtonClick(adapter, view, viewLifecycleOwner, listItem)
+    }
+
+    private fun inicializeProjectNameInput(listItem: Project) {
         binding.nameEditView.setText(listItem.name)
         binding.nameEditView.isEnabled = false
+    }
 
+    private fun deleteProjectOnDeleteButtonClick(
+        adapter: ProjectsRecyclerViewAdapter,
+        view: View,
+        viewLifecycleOwner: LifecycleOwner,
+        listItem: Project
+    ) {
+        binding.deleteButton.setOnClickListener {
+            deleteProject(adapter, view, viewLifecycleOwner, listItem)
+        }
+    }
+
+    private fun navigateToDetailOnEditButtonClick(
+        navController: NavController,
+        listItem: Project
+    ) {
         binding.editButton.setOnClickListener {
             navController.navigate(
                 ProjectsFragmentDirections.actionProjectsFragmentToProjectDetailFragment(listItem)
             )
-        }
-
-        binding.deleteButton.setOnClickListener {
-            deleteProject(adapter, view, viewLifecycleOwner, listItem)
         }
     }
 

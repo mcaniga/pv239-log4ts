@@ -12,7 +12,6 @@ import cz.muni.log4ts.R
 import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.databinding.FragmentProjectEditBinding
 import cz.muni.log4ts.repository.FirebaseProjectRepository
-import cz.muni.log4ts.util.ErrorHandler
 import cz.muni.log4ts.util.ErrorHandler.StaticMethods.safelyNavigateUp
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +26,9 @@ class ProjectDetailFragment : Fragment() {
 
     @Inject
     lateinit var firebaseProjectRepository: FirebaseProjectRepository
+
+    @Inject
+    lateinit var projectDetailValidator: ProjectDetailValidator
 
     private val TAG = ProjectDetailFragment::class.simpleName
 
@@ -43,18 +45,48 @@ class ProjectDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log4TSApplication.appComponent.injectProjectDetailFragmentDeps(this)
-        val project: Project = ProjectDetailFragmentArgs.fromBundle(requireArguments()).item
+        injectDependencies()
+        val project: Project = extractProjectFromArgs()
+        setBackButton(view)
+        inicializeProjectName(project)
+        editProjectOnSubmitButtonClick(view, project)
+    }
 
+    private fun editProjectOnSubmitButtonClick(
+        view: View,
+        project: Project
+    ) {
+        validateInputAfterInputChange()
+        binding.submitButton.setOnClickListener {
+            if (isInputValid()){
+                editProject(view, project)
+            }
+        }
+    }
+
+    private fun validateInputAfterInputChange() {
+        projectDetailValidator.validateNameAfterInputChange(binding)
+    }
+
+    private fun isInputValid(): Boolean {
+        return projectDetailValidator.validateName(binding)
+    }
+
+    private fun inicializeProjectName(project: Project) {
+        binding.nameInput.setText(project.name)
+    }
+
+    private fun injectDependencies() {
+        Log4TSApplication.appComponent.injectProjectDetailFragmentDeps(this)
+    }
+
+    private fun extractProjectFromArgs() =
+        ProjectDetailFragmentArgs.fromBundle(requireArguments()).item
+
+    private fun setBackButton(view: View) {
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         binding.toolbar.setNavigationOnClickListener {
             safelyNavigateUp(findNavController(), TAG, view)
-        }
-
-        binding.nameInput.setText(project.name)
-
-        binding.submitButton.setOnClickListener {
-            editProject(view, project)
         }
     }
 

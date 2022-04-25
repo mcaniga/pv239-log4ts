@@ -82,6 +82,9 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.41'
     kapt 'com.google.dagger:dagger-compiler:2.41'
 
+    // Input validation
+    def ev_version = "1.0.4"
+    implementation "com.wajahatkarim:easyvalidation-core:$ev_version"
 
     // async/await
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1"
