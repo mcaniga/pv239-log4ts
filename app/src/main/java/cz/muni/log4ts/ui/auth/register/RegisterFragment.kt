@@ -10,15 +10,19 @@ import androidx.navigation.fragment.findNavController
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.data.entities.NewUser
 import cz.muni.log4ts.databinding.FragmentRegisterBinding
+import cz.muni.log4ts.ui.OfflineUIHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO: detect if user is offline, if is then show offline indicator, and don't let him sign in
 class RegisterFragment: Fragment() {
     @Inject
-    lateinit var registerFragmentAction: RegisterFragmentAction;
+    lateinit var registerFragmentAction: RegisterFragmentAction
+
     @Inject
-    lateinit var registerFragmentExtractor: RegisterFragmentExtractor;
+    lateinit var registerFragmentExtractor: RegisterFragmentExtractor
+
+    @Inject
+    lateinit var offlineUIHandler: OfflineUIHandler
 
     private lateinit var binding: FragmentRegisterBinding
 
@@ -29,17 +33,37 @@ class RegisterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appComponent.injectRegisterFragmentDeps(this)
+        injectDependencies()
+        showOfflineSnackbarIfOffline(view)
+        enableRegisterButtonIfOnline()
+        registerUserOnRegisterButtonClick(view)
+        navigateToLoginOnLoginTextClick(view)
+    }
 
+    private fun showOfflineSnackbarIfOffline(view: View) {
+        offlineUIHandler.showOfflineSnackbarIfOffline(requireContext(), view)
+    }
+
+    private fun navigateToLoginOnLoginTextClick(view: View) {
+        binding.registerLoginTextView.setOnClickListener {
+            registerFragmentAction.navigateToLogin(findNavController(), view)
+        }
+    }
+
+    private fun registerUserOnRegisterButtonClick(view: View) {
         binding.registerButton.setOnClickListener {
             val newUser: NewUser = registerFragmentExtractor.extractNewUser(binding)
             viewLifecycleOwner.lifecycleScope.launch {
                 registerFragmentAction.registerUser(findNavController(), newUser, view)
             }
         }
+    }
 
-        binding.registerLoginTextView.setOnClickListener {
-            registerFragmentAction.navigateToLogin(findNavController(), view)
-        }
+    private fun injectDependencies() {
+        appComponent.injectRegisterFragmentDeps(this)
+    }
+
+    private fun enableRegisterButtonIfOnline() {
+        offlineUIHandler.enableButtonIfOnline(requireContext(), binding.registerButton, "register")
     }
 }
