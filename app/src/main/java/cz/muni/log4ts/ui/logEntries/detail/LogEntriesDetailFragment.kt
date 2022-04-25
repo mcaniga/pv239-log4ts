@@ -31,6 +31,9 @@ class LogEntriesDetailFragment : Fragment() {
     @Inject
     lateinit var projectSpinnerAdapterFactory: ProjectSpinnerAdapterFactory
 
+    @Inject
+    lateinit var logDetailValidator: LogDetailValidator
+
     private lateinit var binding: FragmentLogEditBinding
 
     private val TAG = LogEntriesDetailFragment::class.simpleName
@@ -46,15 +49,35 @@ class LogEntriesDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log4TSApplication.appComponent.injectLogEntriesDetailFragmentDeps(this)
-        val logEntry: LogEntry = LogEntriesDetailFragmentArgs.fromBundle(requireArguments()).item
+        injectDependencies()
+        val logEntry: LogEntry = extractLogEntryFromArgs()
+        setBackButton(view)
+        inicializeLogEntryName(logEntry)
+        initializeProjectSpinner()
+        editLogEntryOnSubmitButtonClick(view, logEntry)
+    }
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        binding.toolbar.setNavigationOnClickListener {
-            safelyNavigateUp(findNavController(), TAG, view)
+    private fun editLogEntryOnSubmitButtonClick(
+        view: View,
+        logEntry: LogEntry
+    ) {
+        validateInputAfterInputChange()
+        binding.submitButton.setOnClickListener {
+            if (isInputValid()) {
+                editLogEntry(view, logEntry)
+            }
         }
+    }
 
-        binding.nameInput.setText(logEntry.name)
+    private fun validateInputAfterInputChange() {
+        logDetailValidator.validateNameAfterInputChange(binding)
+    }
+
+    private fun isInputValid(): Boolean {
+        return logDetailValidator.validateName(binding)
+    }
+
+    private fun initializeProjectSpinner() {
         viewLifecycleOwner.lifecycleScope.launch {
             val projectSpinnerAdapter = projectSpinnerAdapterFactory.makeProjectSpinnerAdapter(
                 requireContext(),
@@ -62,10 +85,24 @@ class LogEntriesDetailFragment : Fragment() {
             )
             binding.projectsSpinner.adapter = projectSpinnerAdapter
         }
+    }
 
-        binding.submitButton.setOnClickListener {
-            editLogEntry(view, logEntry)
+    private fun inicializeLogEntryName(logEntry: LogEntry) {
+        binding.nameInput.setText(logEntry.name)
+    }
+
+    private fun setBackButton(view: View) {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        binding.toolbar.setNavigationOnClickListener {
+            safelyNavigateUp(findNavController(), TAG, view)
         }
+    }
+
+    private fun extractLogEntryFromArgs() =
+        LogEntriesDetailFragmentArgs.fromBundle(requireArguments()).item
+
+    private fun injectDependencies() {
+        Log4TSApplication.appComponent.injectLogEntriesDetailFragmentDeps(this)
     }
 
     private fun editLogEntry(

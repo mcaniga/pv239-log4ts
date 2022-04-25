@@ -32,6 +32,9 @@ class NewLogEntryFragment : Fragment() {
     lateinit var projectSpinnerAdapterFactory: ProjectSpinnerAdapterFactory
 
     @Inject
+    lateinit var newLogEntryValidator: NewLogEntryValidator
+
+    @Inject
     lateinit var firebaseAuthDao: FirebaseAuthDao
 
     private lateinit var binding: FragmentLogNewBinding
@@ -49,14 +52,31 @@ class NewLogEntryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appComponent.injectNewLogEntryFragmentDeps(this);
-        val elapsedSeconds: Long = NewLogEntryFragmentArgs.fromBundle(requireArguments()).item.elapsedSeconds
+        injectDependencies()
+        val elapsedSeconds: Long = extractElapsedSecondsFromArgs()
+        setBackButton(view)
+        populateProjectSpinner()
+        addLogEntryOnSubmitButtonClick(view, elapsedSeconds)
+    }
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        binding.toolbar.setNavigationOnClickListener {
-            ErrorHandler.safelyNavigateUp(findNavController(), TAG, view)
+    private fun addLogEntryOnSubmitButtonClick(view: View, elapsedSeconds: Long) {
+        validateNewLogEntryInputAfterInputChange()
+        binding.submitButton.setOnClickListener {
+            if (isNewLogEntryInputValid()) {
+                addLogEntry(view, elapsedSeconds)
+            }
         }
+    }
 
+    private fun validateNewLogEntryInputAfterInputChange() {
+        newLogEntryValidator.validateNameAfterInputChange(binding)
+    }
+
+    private fun isNewLogEntryInputValid(): Boolean {
+        return newLogEntryValidator.validateName(binding)
+    }
+
+    private fun populateProjectSpinner() {
         viewLifecycleOwner.lifecycleScope.launch {
             val projectSpinnerAdapter = projectSpinnerAdapterFactory.makeProjectSpinnerAdapter(
                 requireContext(),
@@ -64,10 +84,20 @@ class NewLogEntryFragment : Fragment() {
             )
             binding.projectsSpinner.adapter = projectSpinnerAdapter
         }
+    }
 
-        binding.submitButton.setOnClickListener {
-            addLogEntry(view, elapsedSeconds)
+    private fun setBackButton(view: View) {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        binding.toolbar.setNavigationOnClickListener {
+            ErrorHandler.safelyNavigateUp(findNavController(), TAG, view)
         }
+    }
+
+    private fun extractElapsedSecondsFromArgs() =
+        NewLogEntryFragmentArgs.fromBundle(requireArguments()).item.elapsedSeconds
+
+    private fun injectDependencies() {
+        appComponent.injectNewLogEntryFragmentDeps(this)
     }
 
     private fun addLogEntry(

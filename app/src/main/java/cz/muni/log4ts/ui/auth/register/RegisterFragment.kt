@@ -14,7 +14,7 @@ import cz.muni.log4ts.ui.OfflineUIHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RegisterFragment: Fragment() {
+class RegisterFragment : Fragment() {
     @Inject
     lateinit var registerFragmentAction: RegisterFragmentAction
 
@@ -24,9 +24,16 @@ class RegisterFragment: Fragment() {
     @Inject
     lateinit var offlineUIHandler: OfflineUIHandler
 
+    @Inject
+    lateinit var registerValidator: RegisterValidator
+
     private lateinit var binding: FragmentRegisterBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentRegisterBinding.inflate(LayoutInflater.from(context), container, false)
         return binding.root
     }
@@ -51,12 +58,27 @@ class RegisterFragment: Fragment() {
     }
 
     private fun registerUserOnRegisterButtonClick(view: View) {
+        validateRegisterInputAfterInputChange()
         binding.registerButton.setOnClickListener {
-            val newUser: NewUser = registerFragmentExtractor.extractNewUser(binding)
-            viewLifecycleOwner.lifecycleScope.launch {
-                registerFragmentAction.registerUser(findNavController(), newUser, view)
+            if (isRegisterInputValid()) {
+                val newUser: NewUser = registerFragmentExtractor.extractNewUser(binding)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    registerFragmentAction.registerUser(findNavController(), newUser, view)
+                }
             }
         }
+    }
+
+    private fun validateRegisterInputAfterInputChange() {
+        registerValidator.validateUsernameAfterInputChange(binding)
+        registerValidator.validateEmailAfterInputChange(binding)
+        registerValidator.validatePasswordAfterInputChange(binding)
+    }
+
+    private fun isRegisterInputValid(): Boolean {
+        return registerValidator.validateUsername(binding) &&
+                registerValidator.validateEmail(binding) &&
+                registerValidator.validatePassword(binding)
     }
 
     private fun injectDependencies() {
