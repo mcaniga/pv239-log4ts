@@ -78,42 +78,72 @@
 
     <TextView
         android:id="@+id/start_datetime_text_view_hint"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:paddingBottom="5dp"
         android:text="@string/log_edit_start_datetime_hint"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edit_start_time_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/projects_spinner"
         tools:text="@string/log_edit_start_datetime_hint" />
+
+
+    <ImageButton
+        android:id="@+id/edit_start_time_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:paddingBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toTopOf="@+id/start_datetime_text_view"
+        app:layout_constraintStart_toEndOf="@id/start_datetime_text_view_hint"
+        app:layout_constraintTop_toBottomOf="@+id/projects_spinner"
+        app:tint="@color/aqi_green" />
 
     <TextView
         android:id="@+id/start_datetime_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="27.04.2022 17:58:02"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view_hint" />
+        app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view_hint"
+        tools:text="2022-04-21 17:58:02" />
 
     <TextView
         android:id="@+id/end_datetime_text_view_hint"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/log_edit_end_datetime_hint"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edit_end_time_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view"
         tools:text="@string/log_edit_end_datetime_hint" />
+
+    <ImageButton
+        android:id="@+id/edit_end_time_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:paddingBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toTopOf="@+id/end_datetime_text_view"
+        app:layout_constraintStart_toEndOf="@id/end_datetime_text_view_hint"
+        app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view"
+        app:tint="@color/aqi_green" />
 
     <TextView
         android:id="@+id/end_datetime_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="27.04.2022 19:58:02"
+        tools:text="2022-04-21 19:58:02"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

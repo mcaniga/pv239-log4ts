@@ -10,8 +10,11 @@ import androidx.navigation.fragment.findNavController
 import cz.muni.log4ts.Log4TSApplication
 import cz.muni.log4ts.R
 import cz.muni.log4ts.data.entities.LogEntry
+import cz.muni.log4ts.data.ui.PickedDateTime
 import cz.muni.log4ts.databinding.FragmentLogEditBinding
+import cz.muni.log4ts.extension.toPickedDateTime
 import cz.muni.log4ts.extension.toPrettyString
+import cz.muni.log4ts.extension.toTimestamp
 import cz.muni.log4ts.repository.FirebaseProjectRepository
 import cz.muni.log4ts.ui.projects.detail.ProjectSpinnerAdapterFactory
 import cz.muni.log4ts.util.ErrorHandler.StaticMethods.safelyNavigateUp
@@ -35,9 +38,15 @@ class LogEntriesDetailFragment : Fragment() {
     @Inject
     lateinit var logDetailValidator: LogDetailValidator
 
+    @Inject
+    lateinit var logEntriesDateTimePickerHandler: LogEntriesDateTimePickerHandler
+
     private lateinit var binding: FragmentLogEditBinding
 
     private val TAG = LogEntriesDetailFragment::class.simpleName
+
+    private lateinit var pickedStartTime: PickedDateTime
+    private lateinit var pickedEndTime: PickedDateTime
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +65,26 @@ class LogEntriesDetailFragment : Fragment() {
         inicializeLogEntryName(logEntry)
         initializeProjectSpinner()
         initializeLogTimes(logEntry)
+        initializePickedTime(logEntry)
+        binding.editStartTimeButton.setOnClickListener {
+            logEntriesDateTimePickerHandler.setLogTime(
+                requireContext(), view, pickedStartTime, null,
+                pickedEndTime, binding.startDatetimeTextView
+            )
+            binding.startDatetimeTextView.text = pickedStartTime.toTimestamp().toPrettyString()
+        }
+        binding.editEndTimeButton.setOnClickListener {
+            logEntriesDateTimePickerHandler.setLogTime(
+                requireContext(), view, pickedEndTime, pickedStartTime,
+                null, binding.endDatetimeTextView
+            )
+        }
         editLogEntryOnSubmitButtonClick(view, logEntry)
+    }
+
+    private fun initializePickedTime(logEntry: LogEntry) {
+        pickedStartTime = logEntry.startTime.toPickedDateTime()
+        pickedEndTime = logEntry.endTime.toPickedDateTime()
     }
 
     private fun initializeLogTimes(logEntry: LogEntry) {
@@ -117,7 +145,7 @@ class LogEntriesDetailFragment : Fragment() {
         oldLogEntry: LogEntry
     ) {
         val updatedLogEntry: LogEntry = logEntriesDetailFragmentExtractor.extractUpdatedLogEntry(
-            binding, oldLogEntry
+            binding, oldLogEntry, pickedStartTime, pickedEndTime
         )
         viewLifecycleOwner.lifecycleScope.launch {
             logEntriesDetailAction.editLogEntry(updatedLogEntry, view)
