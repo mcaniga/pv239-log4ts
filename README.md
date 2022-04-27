@@ -13,7 +13,6 @@ Android application for logging of working hours to a company timesheet.
 
 ## Technologies
 - Firebase - backend, DB, auth
-- Retrofit - REST
 
 ## Use Cases
 
