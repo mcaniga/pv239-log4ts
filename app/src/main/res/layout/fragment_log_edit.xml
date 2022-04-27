@@ -10,7 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="20dp"
         android:layout_height="wrap_content"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white" />
@@ -19,36 +18,36 @@
         android:id="@+id/back_text_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="24sp"
-        android:textAppearance="@style/TextMedium"
-        android:text="Log Detail"
         android:layout_marginStart="15dp"
         android:gravity="center"
+        android:text="@string/log_edit_screen_name"
         android:textAlignment="textStart"
+        android:textAppearance="@style/TextMedium"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/name_input_hint_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Log Detail" />
+        tools:text="@string/log_edit_screen_name" />
 
     <TextView
         android:id="@+id/name_input_hint_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Log Name"
         android:paddingTop="20dp"
+        android:text="@string/log_edit_name_hint"
         app:layout_constraintBottom_toTopOf="@+id/name_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Log Name" />
+        tools:text="@string/log_edit_name_hint" />
 
     <EditText
         android:id="@+id/name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/log_edit_name_hint"
+        android:hint="@string/log_edit_input_name_hint"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -67,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_input"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Project" />
+        tools:text="@string/log_edit_project_hint" />
 
     <Spinner
         android:id="@+id/projects_spinner"
@@ -76,6 +75,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/projects_spinner_hint_text_view" />
+
+    <TextView
+        android:id="@+id/start_datetime_text_view_hint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/log_edit_start_datetime_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projects_spinner"
+        tools:text="@string/log_edit_start_datetime_hint" />
+
+    <TextView
+        android:id="@+id/start_datetime_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="27.04.2022 17:58:02"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view_hint" />
+
+    <TextView
+        android:id="@+id/end_datetime_text_view_hint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/log_edit_end_datetime_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_datetime_text_view"
+        tools:text="@string/log_edit_end_datetime_hint" />
+
+    <TextView
+        android:id="@+id/end_datetime_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="27.04.2022 19:58:02"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_datetime_text_view_hint" />
 
     <Button
         android:id="@+id/submit_button"

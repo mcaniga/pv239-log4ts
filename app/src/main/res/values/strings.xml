@@ -22,15 +22,19 @@
     <string name="logout_button_text">Log Out</string>
 
     <string name="projects_create_project_button">+</string>
-    <string name="projects_create_project_hint">Project Name...</string>
+    <string name="projects_create_project_hint">Project Name…</string>
 
     <string name="log_button_log">Log</string>
     <string name="log_button_stop">Stop</string>
 
-    <string name="log_edit_name_hint">Log entry name</string>
+    <string name="log_edit_input_name_hint">Log entry name</string>
     <string name="log_edit_project_hint">Project</string>
     <string name="log_edit_submit_button">Submit</string>
 
     <string name="project_edit_name_hint">Project entry name</string>
+    <string name="log_edit_start_datetime_hint">Start time</string>
+    <string name="log_edit_end_datetime_hint">End time</string>
+    <string name="log_edit_name_hint">Log Name</string>
+    <string name="log_edit_screen_name">Log Detail</string>
 
 </resources>

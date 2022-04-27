@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.navigation.NavController
 import com.google.android.material.snackbar.Snackbar
-import cz.muni.log4ts.ui.logEntries.LogEntriesFragmentDirections
+import java.lang.String.format
 
 class ErrorHandler {
     companion object StaticMethods {
@@ -16,21 +16,17 @@ class ErrorHandler {
          */
         fun showErrorSnackbar(e: Exception, logTag: String?, errorMsg: String, view: View?) {
             e.message?.let { Log.e(logTag, it) }
-            val snack =
-                view?.let { Snackbar.make(it, errorMsg, Snackbar.LENGTH_LONG) }
-            snack?.show()
+            showBasicSnackbar(view, errorMsg)
         }
 
         fun showOfflineSnackbar(view: View?) {
-            val snack = view?.let { Snackbar.make(it, "App is offline", Snackbar.LENGTH_LONG) }
-            snack?.show()
+            showBasicSnackbar(view, APP_IS_OFFLINE_TEXT)
         }
 
         fun showActionWasSucessfullSnackbar(view: View?) {
-            Log.e("StaticMethods", "Showing action was sucessfull in snackbar")
-            val snack =
-                view?.let { Snackbar.make(it, SUCCESSFUL_ACTION_TEXT, Snackbar.LENGTH_LONG) }
-            snack?.setBackgroundTint(GREEN);
+            Log.e(TAG, SHOWING_ACTION_SUCCESSFUL_IN_SNACKBAR_TEXT)
+            val snack = makeSnackbarSafely(view, SUCCESSFUL_ACTION_TEXT)
+            snack?.setBackgroundTint(GREEN)
             snack?.show()
         }
 
@@ -38,10 +34,33 @@ class ErrorHandler {
             try {
                 navController.navigateUp()
             } catch (e: Exception) {
-                showErrorSnackbar(e, tag, "Cannot navigate up...", view)
+                showErrorSnackbar(e, tag, CANNOT_NAVIGATE_UP_TEXT, view)
             }
         }
 
-        private const val SUCCESSFUL_ACTION_TEXT = "Action was successful";
+        private fun makeSnackbarSafely(
+            view: View?,
+            errorMsg: String
+        ): Snackbar? {
+            var snack: Snackbar? = null
+            try {
+                snack = view?.let { Snackbar.make(it, errorMsg, Snackbar.LENGTH_LONG) }
+            } catch (e: Exception) {
+                Log.d(TAG, format(CANNOT_DISPLAY_SNACKBAR_TEXT, e))
+            }
+            return snack
+        }
+
+        private fun showBasicSnackbar(view: View?, errorMsg: String) {
+            var snack: Snackbar? = makeSnackbarSafely(view, errorMsg)
+            snack?.show()
+        }
+
+        private const val SUCCESSFUL_ACTION_TEXT = "Action was successful"
+        private const val TAG = "StaticMethods"
+        private const val APP_IS_OFFLINE_TEXT = "App is offline"
+        private const val CANNOT_DISPLAY_SNACKBAR_TEXT = "Cannot display snackbar: %s"
+        private const val SHOWING_ACTION_SUCCESSFUL_IN_SNACKBAR_TEXT = "Showing action was sucessfull in snackbar"
+        private const val CANNOT_NAVIGATE_UP_TEXT = "Cannot navigate up..."
     }
 }
