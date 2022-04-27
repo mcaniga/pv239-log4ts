@@ -7,7 +7,7 @@ import cz.muni.log4ts.dao.FirebaseLogDao
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.entities.NewLogEntry
 import cz.muni.log4ts.mapper.LogEntryMapper
-import okhttp3.internal.format
+import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
 

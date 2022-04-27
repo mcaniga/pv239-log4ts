@@ -8,7 +8,7 @@ import cz.muni.log4ts.data.entities.LoginUser
 import cz.muni.log4ts.data.entities.NewUser
 import cz.muni.log4ts.mapper.UserDataMapper
 import kotlinx.coroutines.tasks.await
-import okhttp3.internal.format
+import java.lang.String.format
 import javax.inject.Inject
 
 class FirebaseAuthDao @Inject constructor() {
