@@ -89,6 +89,12 @@ dependencies {
     // async/await
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1"
 
+    // Datetime picker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    // Date library
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
+
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20"
 }

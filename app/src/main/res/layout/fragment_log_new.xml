@@ -48,7 +48,7 @@
         android:id="@+id/name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/log_edit_name_hint"
+        android:hint="@string/log_edit_input_name_hint"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/white"

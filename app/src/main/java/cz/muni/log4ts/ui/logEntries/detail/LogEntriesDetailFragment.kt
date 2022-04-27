@@ -11,6 +11,7 @@ import cz.muni.log4ts.Log4TSApplication
 import cz.muni.log4ts.R
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.databinding.FragmentLogEditBinding
+import cz.muni.log4ts.extension.toInstantString
 import cz.muni.log4ts.repository.FirebaseProjectRepository
 import cz.muni.log4ts.ui.projects.detail.ProjectSpinnerAdapterFactory
 import cz.muni.log4ts.util.ErrorHandler.StaticMethods.safelyNavigateUp
@@ -54,7 +55,13 @@ class LogEntriesDetailFragment : Fragment() {
         setBackButton(view)
         inicializeLogEntryName(logEntry)
         initializeProjectSpinner()
+        initializeLogTimes(logEntry)
         editLogEntryOnSubmitButtonClick(view, logEntry)
+    }
+
+    private fun initializeLogTimes(logEntry: LogEntry) {
+        binding.startDatetimeTextView.text = logEntry.startTime.toInstantString()
+        binding.endDatetimeTextView.text = logEntry.endTime.toInstantString()
     }
 
     private fun editLogEntryOnSubmitButtonClick(
