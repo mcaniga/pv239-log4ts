@@ -115,4 +115,31 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="cz.muni.log4ts.ui.reports.detail.ReportDetailFragment"
+        tools:layout="@layout/fragment_report_detail"
+        android:label="ReportDetailFragment">
+
+        <argument
+            android:name="item"
+            app:argType="cz.muni.log4ts.data.dto.ReportDetailDto" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="cz.muni.log4ts.ui.reports.ReportFragment"
+        tools:layout="@layout/fragment_report"
+        android:label="ReportsFragment">
+
+        <action
+            android:id="@+id/action_reportsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_reportsFragment_to_reportsDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+    </fragment>
+
 </navigation>

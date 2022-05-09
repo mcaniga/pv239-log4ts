@@ -4,7 +4,11 @@ import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import cz.muni.log4ts.dao.FirebaseAuthDao
 import cz.muni.log4ts.dao.FirebaseUserDataDao
+import cz.muni.log4ts.data.entities.Project
+import cz.muni.log4ts.data.entities.UserData
+import cz.muni.log4ts.exceptions.UserNotFound
 import cz.muni.log4ts.mapper.UserDataMapper
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,4 +42,21 @@ class FirebaseUserDataRepository @Inject constructor() : UserDataRepositoryInter
         Log.d(TAG, String.format("Parsed username is: %s", username))
         return username
     }
+
+    suspend fun getUserDataDocumentByEmail(email: String): UserData {
+        val userDocument = dao.getUserDataDocumentByEmail(email)
+        if (userDocument.isEmpty) {
+            throw UserNotFound("No user found")
+        }
+        return mapper.makeUserDataFromUserDocument(userDocument)
+    }
+
+    override suspend fun updateUserDataDocument(userData: UserData) {
+        val data: Map<String, Any> = mapper.makeFirebaseDataMapFromUserData(userData)
+        Log.d(TAG, String.format("Made firebase data map: %s from given project", data))
+        dao.updateUserData(userData.userId, data)
+        Log.d(TAG, "Successfully updated the project")
+    }
+
+
 }

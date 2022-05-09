@@ -51,6 +51,8 @@ dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.appcompat:appcompat:1.4.1"
     implementation "com.google.android.material:material:1.5.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // NAVIGATION
     def nav_version = "2.4.0"
@@ -82,6 +84,9 @@ dependencies {
 
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20"
+
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.11.1"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5"
 }
 repositories {
     mavenCentral()

@@ -12,7 +12,7 @@
         android:title="@string/main_navigation_projects" />
 
     <item
-        android:id="@+id/favoritesFragment"
+        android:id="@+id/reportsFragment"
         android:icon="@drawable/ic_heart"
         android:title="@string/main_navigation_report" />
 </menu>

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication.Companion.appComponent
 import cz.muni.log4ts.dao.FirebaseAuthDao
+import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.entities.NewProject
 import cz.muni.log4ts.databinding.FragmentProjectsBinding
 import kotlinx.coroutines.launch

@@ -36,7 +36,7 @@ class FirebaseAuthDao @Inject constructor() {
         Log.d(TAG, format("Creating user from data %s", newUser))
         val user = auth.createUserWithEmailAndPassword(newUser.email, newUser.password).await().user
         Log.d(TAG, "User created successfully")
-        val data = user?.let { userDataMapper.makeNewUserDataFirebaseMap(it, newUser.username) }
+        val data = user?.let { userDataMapper.makeNewUserDataFirebaseMap(it, newUser.username, newUser.email) }
         Log.d(TAG, "Made initial user data")
         user?.let { firebaseUserDataDao.createUserData(it.uid, data!!) }
         Log.d(TAG, "Initial user data created successfully")

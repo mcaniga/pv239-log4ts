@@ -7,6 +7,8 @@ import cz.muni.log4ts.ui.logEntries.LogEntriesFragment
 import cz.muni.log4ts.ui.logEntries.LogEntriesFragmentDirections
 import cz.muni.log4ts.ui.projects.ProjectsFragment
 import cz.muni.log4ts.ui.projects.ProjectsFragmentDirections
+import cz.muni.log4ts.ui.reports.ReportFragment
+import cz.muni.log4ts.ui.reports.ReportFragmentDirections
 import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,6 +31,9 @@ class HeaderFragmentNavDirectionsResolver @Inject constructor() {
             }
             LogEntriesFragment::class.simpleName -> {
                 LogEntriesFragmentDirections.actionLogEntriesFragmentToLoginFragment()
+            }
+            ReportFragment::class.simpleName -> {
+                ReportFragmentDirections.actionReportsFragmentToLoginFragment()
             }
             else -> {
                 throw IllegalStateException("Unknown parent fragment in HeaderFragmentNavDirectionsResolver::getSignOutDirections")
