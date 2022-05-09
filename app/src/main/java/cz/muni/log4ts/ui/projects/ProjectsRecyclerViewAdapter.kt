@@ -12,7 +12,7 @@ import cz.muni.log4ts.databinding.ItemProjectListBinding
 
 class ProjectsRecyclerViewAdapter(val viewLifecycleOwner: LifecycleOwner, val view: View, val navController: NavController) : RecyclerView.Adapter<ProjectsViewHolder>() {
 
-    private var listItems: MutableList<Project> = mutableListOf()
+    var listItems: MutableList<Project> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsViewHolder {
         val binding = ItemProjectListBinding.inflate(LayoutInflater.from(parent.context), parent, false)

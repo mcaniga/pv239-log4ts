@@ -8,4 +8,5 @@ data class Project(
     val id: String,
     val namespaceId: String,
     val name: String,
+    val users: MutableList<String>
 ): Parcelable

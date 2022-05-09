@@ -36,7 +36,7 @@ class HeaderFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appComponent.injectHeaderFragmentDeps(this)
 
-        binding.namespaceTextview.text = "global" // TODO: current namespace from state
+        binding.namespaceTextview.text = "Log4TS"
 
         viewLifecycleOwner.lifecycleScope.launch {
             binding.usernameTextview.text = firebaseUserDataRepository.getCurrentUsername()

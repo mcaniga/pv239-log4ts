@@ -16,7 +16,8 @@ class ProjectsViewHolderExtractor @Inject constructor() {
         return Project(
             id = oldProject.id,
             namespaceId = oldProject.namespaceId,
-            name
+            name = name,
+            users = oldProject.users
         )
     }
 }

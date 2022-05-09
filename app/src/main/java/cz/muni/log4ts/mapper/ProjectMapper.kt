@@ -13,7 +13,7 @@ class ProjectMapper @Inject constructor() {
         return projectsDocuments.documents.map { makeProjectFromProjectDocument(namespaceId, it) }
     }
 
-    fun makeProjectFromProjectDocument(
+    private fun makeProjectFromProjectDocument(
         namespaceId: String,
         projectDocument: DocumentSnapshot
     ): Project {
@@ -22,6 +22,7 @@ class ProjectMapper @Inject constructor() {
             id = projectDocument.id,
             namespaceId = namespaceId,
             name = data?.get("name")!! as String,
+            users = data["users"] as MutableList<String>
         )
     }
 
@@ -33,5 +34,6 @@ class ProjectMapper @Inject constructor() {
     fun makeFirebaseDataMapFromProject(project: Project): Map<String, Any> =
         hashMapOf(
             "name" to project.name,
+            "users" to project.users
         )
 }

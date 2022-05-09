@@ -50,6 +50,8 @@ class ProjectDetailFragment : Fragment() {
         setBackButton(view)
         inicializeProjectName(project)
         editProjectOnSubmitButtonClick(view, project)
+        addUserToProjectOnAddButtonClick(view, project)
+        removeUserFromProjectOnRemoveButtonClick(view, project)
     }
 
     private fun editProjectOnSubmitButtonClick(
@@ -57,15 +59,50 @@ class ProjectDetailFragment : Fragment() {
         project: Project
     ) {
         validateInputAfterInputChange()
+        val updatedProject: Project = logEntriesDetailFragmentExtractor.extractUpdatedProject(
+            binding, project
+        )
         binding.submitButton.setOnClickListener {
             if (isInputValid()){
-                editProject(view, project)
+                editProject(view, updatedProject)
+            }
+        }
+    }
+
+    private fun addUserToProjectOnAddButtonClick(
+        view: View,
+        project: Project
+    ) {
+
+        binding.addUserButton.setOnClickListener {
+            validateEmailAfterInputChange()
+            val email: String = binding.emailInput.text.toString()
+            viewLifecycleOwner.lifecycleScope.launch {
+                logEntriesDetailAction.editProjectAddUser(project, email, view)
+            }
+        }
+    }
+
+    private fun removeUserFromProjectOnRemoveButtonClick(
+        view: View,
+        project: Project
+    ) {
+        binding.removeUserButton.setOnClickListener {
+            validateEmailAfterInputChange()
+            val email: String = binding.emailInput.text.toString()
+            viewLifecycleOwner.lifecycleScope.launch {
+                logEntriesDetailAction.editProjectRemoveUser(project, email, view)
             }
         }
     }
 
     private fun validateInputAfterInputChange() {
         projectDetailValidator.validateNameAfterInputChange(binding)
+    }
+
+
+    private fun validateEmailAfterInputChange() {
+        projectDetailValidator.validateEmailAfterInputChange(binding)
     }
 
     private fun isInputValid(): Boolean {
@@ -92,11 +129,8 @@ class ProjectDetailFragment : Fragment() {
 
     private fun editProject(
         view: View,
-        oldProject: Project
+        updatedProject: Project
     ) {
-        val updatedProject: Project = logEntriesDetailFragmentExtractor.extractUpdatedProject(
-            binding, oldProject
-        )
         viewLifecycleOwner.lifecycleScope.launch {
             logEntriesDetailAction.editProject(updatedProject, view)
         }

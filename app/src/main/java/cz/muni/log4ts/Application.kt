@@ -11,6 +11,9 @@ import cz.muni.log4ts.ui.logEntries.newLogEntry.NewLogEntryFragment
 import cz.muni.log4ts.ui.projects.ProjectsFragment
 import cz.muni.log4ts.ui.projects.ProjectsViewHolder
 import cz.muni.log4ts.ui.projects.detail.ProjectDetailFragment
+import cz.muni.log4ts.ui.reports.ReportFragment
+import cz.muni.log4ts.ui.reports.ReportsViewHolder
+import cz.muni.log4ts.ui.reports.detail.ReportDetailFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -32,6 +35,10 @@ interface ApplicationComponent {
     fun injectLogEntriesDetailFragmentDeps(logEntriesDetailFragment: LogEntriesDetailFragment)
     fun injectProjectDetailFragmentDeps(projectDetailFragment: ProjectDetailFragment)
     fun injectNewLogEntryFragmentDeps(newLogEntryFragment: NewLogEntryFragment)
+    fun injectReportFragmentDeps(reportFragment: ReportFragment)
+    fun injectReportsViewHolderDeps(reportsViewHolder: ReportsViewHolder)
+    fun injectReportDetailFragmentDeps(reportDetailFragment: ReportDetailFragment)
+
 }
 
 class Log4TSApplication: Application() {

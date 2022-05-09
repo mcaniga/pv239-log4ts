@@ -57,6 +57,53 @@
         app:layout_constraintTop_toBottomOf="@id/name_input_hint_text_view"
         app:layout_constraintVertical_chainStyle="packed" />
 
+
+    <TextView
+        android:id="@+id/email_input_hint_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="User Email"
+        android:layout_marginTop="20dp"
+        android:paddingTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_input"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Project Name" />
+
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email_input_hint_text_view"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/add_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="add user"
+        app:layout_constraintTop_toBottomOf="@+id/email_input"
+        app:layout_constraintEnd_toStartOf="@+id/remove_user_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/remove_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="remove user"
+        app:layout_constraintTop_toBottomOf="@+id/email_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_user_button" />
+
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"

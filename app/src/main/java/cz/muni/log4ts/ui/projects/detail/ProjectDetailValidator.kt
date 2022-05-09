@@ -19,4 +19,17 @@ class ProjectDetailValidator @Inject constructor() {
                 binding.nameInput.error = it
             }.check()
     }
+
+    fun validateEmailAfterInputChange(binding: FragmentProjectEditBinding) {
+        binding.emailInput.doAfterTextChanged { validateEmail(binding) }
+
+    }
+
+    fun validateEmail(binding: FragmentProjectEditBinding): Boolean {
+        return binding.emailInput.validator()
+            .validEmail()
+            .addErrorCallback {
+                binding.emailInput.error = it
+            }.check()
+    }
 }
