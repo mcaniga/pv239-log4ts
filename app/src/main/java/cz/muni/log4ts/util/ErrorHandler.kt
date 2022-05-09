@@ -19,6 +19,10 @@ class ErrorHandler {
             showBasicSnackbar(view, errorMsg)
         }
 
+        fun showErrorSnackbar(errorMsg: String, view: View?) {
+            showBasicSnackbar(view, errorMsg)
+        }
+
         fun showOfflineSnackbar(view: View?) {
             showBasicSnackbar(view, APP_IS_OFFLINE_TEXT)
         }

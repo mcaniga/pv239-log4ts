@@ -9,7 +9,7 @@ import cz.muni.log4ts.ui.projects.ProjectsFragment
 import cz.muni.log4ts.ui.projects.ProjectsFragmentDirections
 import cz.muni.log4ts.ui.reports.ReportFragment
 import cz.muni.log4ts.ui.reports.ReportFragmentDirections
-import okhttp3.internal.format
+import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
 
