@@ -58,7 +58,6 @@ class ProjectDetailFragment : Fragment() {
         view: View,
         project: Project
     ) {
-        validateInputAfterInputChange()
 
         binding.submitButton.setOnClickListener {
             val updatedProject: Project = logEntriesDetailFragmentExtractor.extractUpdatedProject(
@@ -97,11 +96,6 @@ class ProjectDetailFragment : Fragment() {
             }
         }
     }
-
-    private fun validateInputAfterInputChange() {
-        projectDetailValidator.validateNameAfterInputChange(binding)
-    }
-
 
     private fun validateEmailAfterInputChange() {
         projectDetailValidator.validateEmailAfterInputChange(binding)

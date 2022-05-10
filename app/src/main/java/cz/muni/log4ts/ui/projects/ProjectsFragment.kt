@@ -75,7 +75,6 @@ class ProjectsFragment : Fragment() {
         recyclerViewAdapter: ProjectsRecyclerViewAdapter,
         view: View
     ) {
-        validateInputAfterChange()
         binding.createProjectButton.setOnClickListener {
             if (isInputValid()) {
                 val newProject: NewProject = projectsFragmentExtractor.extractNewProject(
@@ -86,10 +85,6 @@ class ProjectsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun validateInputAfterChange() {
-        projectValidator.validateNameAfterInputChange(binding)
     }
 
     private fun isInputValid(): Boolean {

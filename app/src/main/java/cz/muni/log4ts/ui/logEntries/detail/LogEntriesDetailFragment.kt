@@ -96,16 +96,11 @@ class LogEntriesDetailFragment : Fragment() {
         view: View,
         logEntry: LogEntry
     ) {
-        validateInputAfterInputChange()
         binding.submitButton.setOnClickListener {
             if (isInputValid()) {
                 editLogEntry(view, logEntry)
             }
         }
-    }
-
-    private fun validateInputAfterInputChange() {
-        logDetailValidator.validateNameAfterInputChange(binding)
     }
 
     private fun isInputValid(): Boolean {

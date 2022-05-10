@@ -69,7 +69,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun setLoginOnClickListenerOnLoginButton(view: View) {
-        validateLoginInputAfterInputChange()
         binding.loginButton.setOnClickListener {
             if (isLoginInputValid()) {
                 val newUser: LoginUser = loginFragmentExtractor.extractLoginUser(binding)
@@ -81,13 +80,11 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun validateLoginInputAfterInputChange() {
-        loginValidator.validateEmailAfterInputChange(binding)
-        loginValidator.validatePasswordAfterInputChange(binding)
-    }
-
     private fun isLoginInputValid(): Boolean {
-        return loginValidator.validateEmail(binding) && loginValidator.validatePassword(binding)
+        val validationResults: ArrayList<Boolean> = ArrayList();
+        validationResults.add(loginValidator.validateEmail(binding));
+        validationResults.add(loginValidator.validatePassword(binding));
+        return validationResults.all { it }
     }
 
     private fun enableLoginButtonIfOnline() {

@@ -59,7 +59,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun registerUserOnRegisterButtonClick(view: View) {
-        validateRegisterInputAfterInputChange()
         binding.registerButton.setOnClickListener {
             if (isRegisterInputValid()) {
                 val newUser: NewUser = registerFragmentExtractor.extractNewUser(binding)
@@ -70,16 +69,12 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun validateRegisterInputAfterInputChange() {
-        registerValidator.validateUsernameAfterInputChange(binding)
-        registerValidator.validateEmailAfterInputChange(binding)
-        registerValidator.validatePasswordAfterInputChange(binding)
-    }
-
     private fun isRegisterInputValid(): Boolean {
-        return registerValidator.validateUsername(binding) &&
-                registerValidator.validateEmail(binding) &&
-                registerValidator.validatePassword(binding)
+        val validationResults: ArrayList<Boolean> = ArrayList();
+        validationResults.add(registerValidator.validateUsername(binding));
+        validationResults.add(registerValidator.validateEmail(binding));
+        validationResults.add(registerValidator.validatePassword(binding));
+        return validationResults.all { it }
     }
 
     private fun injectDependencies() {
