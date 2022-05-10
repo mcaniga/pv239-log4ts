@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import cz.muni.log4ts.databinding.FragmentLogEntriesBinding
 import cz.muni.log4ts.service.TimerService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class LogEntriesFragment : Fragment() {
     @Inject
@@ -70,6 +72,14 @@ class LogEntriesFragment : Fragment() {
 
         logTimerState.serviceIntent = Intent(requireContext(), TimerService::class.java)
         subscribeToTimerUpdatedEvent()
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Handle the back button event
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun subscribeToTimerUpdatedEvent() {
