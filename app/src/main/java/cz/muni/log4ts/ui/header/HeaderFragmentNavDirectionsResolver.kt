@@ -23,7 +23,6 @@ class HeaderFragmentNavDirectionsResolver @Inject constructor() {
         return getSignOutDirectionsByParentFragmentName(parentFragmentName)
     }
 
-    // TODO: add all fragments that are using HeaderFragment
     private fun getSignOutDirectionsByParentFragmentName(parentFragmentName: String): NavDirections {
         return when (parentFragmentName) {
             ProjectsFragment::class.simpleName -> {

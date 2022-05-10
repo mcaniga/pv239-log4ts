@@ -25,24 +25,4 @@ class HeaderFragmentAction @Inject constructor() {
             ErrorHandler.showErrorSnackbar(e, TAG, "Sign out failed...", view)
         }
     }
-
-    fun signOutFromLogEntries(navController: NavController, view: View) {
-        try {
-            authDao.signOut()
-            // TODO: change after moving to other component
-            navController.navigate(LogEntriesFragmentDirections.actionLogEntriesFragmentToLoginFragment())
-        } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Sign out failed...", view)
-        }
-    }
-
-    fun signOutFromProjects(navController: NavController, view: View) {
-        try {
-            authDao.signOut()
-            // TODO: change after moving to other component
-            navController.navigate(ProjectsFragmentDirections.actionProjectsFragmentToLoginFragment())
-        } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Sign out failed...", view)
-        }
-    }
 }

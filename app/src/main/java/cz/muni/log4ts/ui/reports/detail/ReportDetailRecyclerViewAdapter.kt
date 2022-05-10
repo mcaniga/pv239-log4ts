@@ -9,7 +9,6 @@ import android.view.ViewGroup
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
  */
 
 

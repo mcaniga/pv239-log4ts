@@ -14,7 +14,6 @@ import cz.muni.log4ts.ui.reports.placeholder.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
  */
 
 

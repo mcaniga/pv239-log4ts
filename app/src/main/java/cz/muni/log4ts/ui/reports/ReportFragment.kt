@@ -86,7 +86,7 @@ class ReportFragment : Fragment() {
                 upperCalendar.time,
                 recyclerViewAdapter,
                 view
-            ) // TODO: get namespace from state
+            )
         }
     }
 
@@ -174,7 +174,7 @@ class ReportFragment : Fragment() {
                     upperCalendar.time,
                     recyclerViewAdapter,
                     view
-                ) // TODO: get namespace from state
+                )
             }
         }
     }

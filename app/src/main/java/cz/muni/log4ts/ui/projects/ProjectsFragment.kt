@@ -58,7 +58,7 @@ class ProjectsFragment : Fragment() {
                 "global",
                 recyclerViewAdapter,
                 view
-            ) // TODO: get namespace from state
+            )
         }
     }
 

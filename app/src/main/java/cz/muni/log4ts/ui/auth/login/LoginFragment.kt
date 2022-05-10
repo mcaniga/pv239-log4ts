@@ -14,7 +14,6 @@ import cz.muni.log4ts.ui.OfflineUIHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO: switching between fragments (eg. in click on bottom bar icon, or back arrow) during incompleted CRUD with firebase causes app crash, catch the exception and act appropriately
 class LoginFragment : Fragment() {
     @Inject
     lateinit var loginFragmentAction: LoginFragmentAction

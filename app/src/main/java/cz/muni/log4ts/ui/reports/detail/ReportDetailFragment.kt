@@ -1,6 +1,5 @@
 package cz.muni.log4ts.ui.reports.detail
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -89,16 +88,12 @@ class ReportDetailFragment : Fragment() {
                 upperBound,
                 recyclerViewAdapter,
                 view
-            ) // TODO: get namespace from state
+            )
         }
     }
 
     private fun exportCsvOnButtonClick(view: View, recyclerViewAdapter: ReportDetailRecyclerViewAdapter) {
-        val currTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DateTimeFormatter.ISO_INSTANT.format(Instant.now()).replace(":", ".")
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
+        val currTime = DateTimeFormatter.ISO_INSTANT.format(Instant.now()).replace(":", ".")
         binding.save.setOnClickListener {
             val downloadsDirectoryPath =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath

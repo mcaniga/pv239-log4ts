@@ -64,7 +64,7 @@ class LogEntriesFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
+            val userId: String = firebaseAuthDao.getCurrentUserId()!!
             logEntriesAction.getLogEntriesOrShowError(userId, recyclerViewAdapter, view)
         }
 

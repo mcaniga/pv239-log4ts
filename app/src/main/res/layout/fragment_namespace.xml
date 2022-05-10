@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.namespaces.NamespaceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
