@@ -20,6 +20,7 @@ import cz.muni.log4ts.mapper.LogEntryMapper
 import cz.muni.log4ts.util.ErrorHandler
 import kotlinx.coroutines.launch
 import java.io.FileWriter
+import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -98,10 +99,12 @@ class ReportDetailFragment : Fragment() {
             val downloadsDirectoryPath =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
             val reportFilename = "/${username}_${projectName}_${currTime}.csv"
+            val csvPath = downloadsDirectoryPath + reportFilename;
             writeCsvFile(
      downloadsDirectoryPath + reportFilename,
                 recyclerViewAdapter.listItems
             )
+            ErrorHandler.showActionWasSucessfullSnackbar(view, format("CSV saved to: %s", csvPath))
         }
     }
 

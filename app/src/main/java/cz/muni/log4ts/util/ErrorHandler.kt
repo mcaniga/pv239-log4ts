@@ -34,6 +34,13 @@ class ErrorHandler {
             snack?.show()
         }
 
+        fun showActionWasSucessfullSnackbar(view: View?, text: String) {
+            Log.e(TAG, SHOWING_ACTION_SUCCESSFUL_IN_SNACKBAR_TEXT)
+            val snack = makeSnackbarSafely(view, text)
+            snack?.setBackgroundTint(GREEN)
+            snack?.show()
+        }
+
         fun safelyNavigateUp(navController: NavController, tag: String?, view: View) {
             try {
                 navController.navigateUp()

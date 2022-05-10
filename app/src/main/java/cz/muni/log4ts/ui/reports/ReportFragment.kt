@@ -16,7 +16,6 @@ import cz.muni.log4ts.databinding.FragmentReportBinding
 import cz.muni.log4ts.repository.FirebaseProjectRepository
 import cz.muni.log4ts.ui.projects.ProjectsFragmentExtractor
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDate
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -80,8 +79,6 @@ class ReportFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             reportAction.getReportEntriesOrShowError(
                 project,
-//                setMinCalendar(Calendar.getInstance()).time,
-//                setMaxCalendar(Calendar.getInstance()).time,
                 lowerCalendar.time,
                 upperCalendar.time,
                 recyclerViewAdapter,
@@ -163,8 +160,6 @@ class ReportFragment : Fragment() {
         view: View,
         recyclerViewAdapter: ReportRecyclerViewAdapter
     ) {
-//        Log.d(TAG, String.format(": %s from given log entry", data))
-
         binding.applyFilters.setOnClickListener {
             val project = binding.projectsSpinner.selectedItem.toString()
             viewLifecycleOwner.lifecycleScope.launch {
