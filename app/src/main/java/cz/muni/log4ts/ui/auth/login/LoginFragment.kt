@@ -47,6 +47,7 @@ class LoginFragment : Fragment() {
         enableLoginButtonIfOnline()
         loginUserOnLoginButtonClick(view)
         navigateToRegisterViewOnSignupTextClick(view)
+        loginFragmentAction.loginUserIfSessionIsRunning(findNavController(), view)
     }
 
     private fun injectDependencies() {

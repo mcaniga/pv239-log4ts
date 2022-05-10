@@ -45,6 +45,7 @@ class RegisterFragment : Fragment() {
         enableRegisterButtonIfOnline()
         registerUserOnRegisterButtonClick(view)
         navigateToLoginOnLoginTextClick(view)
+        registerFragmentAction.loginUserIfSessionIsRunning(findNavController(), view)
     }
 
     private fun showOfflineSnackbarIfOffline(view: View) {
