@@ -1,41 +1,31 @@
 package cz.muni.log4ts.ui.reports.detail
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fasterxml.jackson.dataformat.csv.CsvMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import cz.muni.log4ts.Log4TSApplication
 import cz.muni.log4ts.R
 import cz.muni.log4ts.data.dto.ReportDetailDto
 import cz.muni.log4ts.data.entities.LogEntry
-import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.databinding.FragmentReportDetailBinding
-import cz.muni.log4ts.ui.projects.detail.*
-import cz.muni.log4ts.ui.reports.ReportRecyclerViewAdapter
+import cz.muni.log4ts.mapper.LogEntryMapper
 import cz.muni.log4ts.util.ErrorHandler
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import java.io.FileWriter
-import com.fasterxml.jackson.dataformat.csv.CsvMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import cz.muni.log4ts.mapper.LogEntryMapper
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
 class ReportDetailFragment : Fragment() {
 
@@ -79,7 +69,6 @@ class ReportDetailFragment : Fragment() {
         val recyclerViewAdapter = ReportDetailRecyclerViewAdapter(viewLifecycleOwner, view, findNavController())
         setRecyclerView(recyclerViewAdapter)
         getReportDetails(recyclerViewAdapter, view)
-//        data = recyclerViewAdapter.listItems
         exportCsvOnButtonClick(view, recyclerViewAdapter)
     }
 
@@ -105,16 +94,19 @@ class ReportDetailFragment : Fragment() {
     }
 
     private fun exportCsvOnButtonClick(view: View, recyclerViewAdapter: ReportDetailRecyclerViewAdapter) {
-//        Log.d(TAG, String.format(": %s from given log entry", data))
         val currTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateTimeFormatter.ISO_INSTANT.format(Instant.now()).replace(":", ".")
         } else {
             TODO("VERSION.SDK_INT < O")
         }
         binding.save.setOnClickListener {
-            writeCsvFile(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS).absolutePath + "/${username}_${projectName}_${currTime}.csv",
-                recyclerViewAdapter.listItems)
+            val downloadsDirectoryPath =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+            val reportFilename = "/${username}_${projectName}_${currTime}.csv"
+            writeCsvFile(
+     downloadsDirectoryPath + reportFilename,
+                recyclerViewAdapter.listItems
+            )
         }
     }
 
@@ -149,19 +141,11 @@ class ReportDetailFragment : Fragment() {
     private fun extractReportDetailDtoFromArgs() =
         ReportDetailFragmentArgs.fromBundle(requireArguments()).item
 
-//    private fun setBackButton(view: View) {
-//        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-//        binding.toolbar.setNavigationOnClickListener {
-//            ErrorHandler.safelyNavigateUp(findNavController(), TAG, view)
-//        }
-//    }
-
     private fun setBackButton(view: View) {
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         binding.toolbar.setNavigationOnClickListener {
             ErrorHandler.safelyNavigateUp(findNavController(), TAG, view)
         }
     }
-
 
 }

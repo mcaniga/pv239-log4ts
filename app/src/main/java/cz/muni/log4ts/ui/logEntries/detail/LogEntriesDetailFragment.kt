@@ -147,8 +147,9 @@ class LogEntriesDetailFragment : Fragment() {
         val updatedLogEntry: LogEntry = logEntriesDetailFragmentExtractor.extractUpdatedLogEntry(
             binding, oldLogEntry, pickedStartTime, pickedEndTime
         )
+        val navController = findNavController()
         viewLifecycleOwner.lifecycleScope.launch {
-            logEntriesDetailAction.editLogEntry(updatedLogEntry, view)
+            logEntriesDetailAction.editLogEntry(navController, updatedLogEntry, view)
         }
     }
 }

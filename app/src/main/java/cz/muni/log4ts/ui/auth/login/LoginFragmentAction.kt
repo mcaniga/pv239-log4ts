@@ -23,7 +23,7 @@ class LoginFragmentAction @Inject constructor() {
             authDao.signIn(loginUser)
             navController.navigate(LoginFragmentDirections.actionLoginFragmentToLogEntriesFragment())
         } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Sign in failed...", view)
+            ErrorHandler.showErrorSnackbar(e, TAG, e.message ?: "Sign in failed...", view)
         }
     }
 

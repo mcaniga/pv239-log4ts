@@ -79,7 +79,7 @@ class ProjectsFragment : Fragment() {
         binding.createProjectButton.setOnClickListener {
             if (isInputValid()) {
                 val newProject: NewProject = projectsFragmentExtractor.extractNewProject(
-                    binding, "global" // TODO: from extract from state
+                    binding, "global"
                 )
                 viewLifecycleOwner.lifecycleScope.launch {
                     projectsAction.addProject(recyclerViewAdapter, newProject, view)
