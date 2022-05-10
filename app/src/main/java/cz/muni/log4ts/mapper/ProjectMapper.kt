@@ -28,7 +28,8 @@ class ProjectMapper @Inject constructor() {
 
     fun makeFirebaseDataMapFromNewProject(newProject: NewProject): Map<String, Any> =
         hashMapOf(
-            "name" to newProject.name
+            "name" to newProject.name,
+            "users" to ArrayList<String>()
         )
 
     fun makeFirebaseDataMapFromProject(project: Project): Map<String, Any> =

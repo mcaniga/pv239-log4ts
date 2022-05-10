@@ -1,10 +1,7 @@
 package cz.muni.log4ts.ui.projects.detail
 
-import cz.muni.log4ts.dao.FirebaseUserDataDao
 import cz.muni.log4ts.data.entities.Project
-import cz.muni.log4ts.data.entities.UserData
 import cz.muni.log4ts.databinding.FragmentProjectEditBinding
-import cz.muni.log4ts.repository.FirebaseUserDataRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

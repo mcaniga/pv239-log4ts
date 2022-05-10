@@ -1,6 +1,7 @@
 package cz.muni.log4ts.ui.logEntries.detail
 
 import android.view.View
+import androidx.navigation.NavController
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.repository.FirebaseLogRepository
 import cz.muni.log4ts.util.ErrorHandler
@@ -14,10 +15,11 @@ class LogEntriesDetailFragmentAction @Inject constructor() {
 
     val TAG = LogEntriesDetailFragmentAction::class.simpleName
 
-    suspend fun editLogEntry(logEntry: LogEntry, view: View) {
+    suspend fun editLogEntry(navController: NavController, logEntry: LogEntry, view: View) {
         try {
             logRepository.updateLogEntry(logEntry)
             ErrorHandler.showActionWasSucessfullSnackbar(view)
+            navController.navigate(LogEntriesDetailFragmentDirections.actionLogEntriesDetailFragmentToLogEntriesFragment())
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Editing of log entry failed...", view)
         }

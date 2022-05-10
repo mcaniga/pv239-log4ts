@@ -59,10 +59,12 @@ class ProjectDetailFragment : Fragment() {
         project: Project
     ) {
         validateInputAfterInputChange()
-        val updatedProject: Project = logEntriesDetailFragmentExtractor.extractUpdatedProject(
-            binding, project
-        )
+
         binding.submitButton.setOnClickListener {
+            val updatedProject: Project = logEntriesDetailFragmentExtractor.extractUpdatedProject(
+                binding, project
+            )
+
             if (isInputValid()){
                 editProject(view, updatedProject)
             }
@@ -131,8 +133,9 @@ class ProjectDetailFragment : Fragment() {
         view: View,
         updatedProject: Project
     ) {
+        val navController = findNavController()
         viewLifecycleOwner.lifecycleScope.launch {
-            logEntriesDetailAction.editProject(updatedProject, view)
+            logEntriesDetailAction.editProject(navController, updatedProject, view)
         }
     }
 }

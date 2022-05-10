@@ -7,7 +7,7 @@ import cz.muni.log4ts.dao.FirebaseNamespaceDao
 import cz.muni.log4ts.data.entities.Namespace
 import cz.muni.log4ts.data.entities.NewNamespace
 import cz.muni.log4ts.mapper.NamespaceMapper
-import okhttp3.internal.format
+import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -20,7 +20,7 @@ class RegisterFragmentAction @Inject constructor() {
             authDao.createUser(newUser)
             navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLogEntriesFragment())
         } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Register failed...", view)
+            ErrorHandler.showErrorSnackbar(e, TAG, e.message ?: "Register failed...", view)
         }
     }
 

@@ -104,14 +104,14 @@ class NewLogEntryFragment : Fragment() {
         view: View,
         elapsedSeconds: Long
     ) {
-        val userId: String = firebaseAuthDao.getCurrentUserId()!! // TODO: remove !! safely
-        // TODO: extract namespace from state
+        val userId: String = firebaseAuthDao.getCurrentUserId()!!
         val newLogEntry: NewLogEntry = newLogEntryFragmentExtractor.extractNewLogEntry(
             binding, userId, "global", elapsedSeconds
         )
 
+        val navController = findNavController()
         viewLifecycleOwner.lifecycleScope.launch {
-            newLogEntryAction.addLogEntry(newLogEntry, view)
+            newLogEntryAction.addLogEntry(navController, newLogEntry, view)
         }
     }
 }

@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class ProjectSpinnerAdapterFactory  @Inject constructor() {
     suspend fun makeProjectSpinnerAdapter(context: Context, projectRepository: FirebaseProjectRepository): ArrayAdapter<String>{
-        val projects =  projectRepository.getAllProjectsInNamespace("global") // TODO: get namespace from state
+        val projects =  projectRepository.getAllProjectsInNamespace("global")
         val projectNames: List<String> = projects.map { it.name }
 
         return ArrayAdapter<String>(

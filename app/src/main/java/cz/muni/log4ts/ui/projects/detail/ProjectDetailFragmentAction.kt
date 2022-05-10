@@ -2,6 +2,7 @@ package cz.muni.log4ts.ui.projects.detail
 
 import android.util.Log
 import android.view.View
+import androidx.navigation.NavController
 import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.data.entities.UserData
 import cz.muni.log4ts.exceptions.UserAlreadyPresent
@@ -11,7 +12,7 @@ import cz.muni.log4ts.repository.FirebaseProjectRepository
 import cz.muni.log4ts.repository.FirebaseUserDataRepository
 import cz.muni.log4ts.util.ErrorHandler
 import cz.muni.log4ts.util.ErrorHandler.StaticMethods.showActionWasSucessfullSnackbar
-import java.lang.IllegalArgumentException
+import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,10 +26,12 @@ class ProjectDetailFragmentAction @Inject constructor() {
 
     val TAG = ProjectDetailFragmentAction::class.simpleName
 
-    suspend fun editProject(project: Project, view: View) {
+    suspend fun editProject(navController: NavController, project: Project, view: View) {
         try {
+            Log.d(TAG, format("Project to update: %s", project))
             projectRepository.updateProjectInNamespace(project)
             showActionWasSucessfullSnackbar(view)
+            navController.navigate(ProjectDetailFragmentDirections.actionProjectDetailFragmentToProjectsFragment())
         } catch (e: Exception) {
             ErrorHandler.showErrorSnackbar(e, TAG, "Editing of project failed...", view)
         }
