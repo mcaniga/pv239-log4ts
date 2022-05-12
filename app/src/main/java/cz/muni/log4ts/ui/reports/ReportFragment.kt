@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.muni.log4ts.Log4TSApplication
+import cz.muni.log4ts.R
 import cz.muni.log4ts.dao.FirebaseAuthDao
 import cz.muni.log4ts.databinding.FragmentReportBinding
 import cz.muni.log4ts.repository.FirebaseProjectRepository
@@ -131,6 +132,7 @@ class ReportFragment : Fragment() {
         editText.setOnClickListener {
                 DatePickerDialog(
                     requireContext(),
+                    R.style.MyAppTheme,
                     dateSetListener,
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),

@@ -164,7 +164,8 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:textColorHint="@color/aqi_orange" />
+                android:textColorHint="@color/aqi_orange"
+                android:textColor="@color/aqi_orange"/>
         </LinearLayout>
 
         <LinearLayout
