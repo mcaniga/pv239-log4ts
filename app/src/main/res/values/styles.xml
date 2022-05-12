@@ -3,7 +3,9 @@
     <style name="MyAppTheme" parent="Theme.AppCompat.Light">
         <item name="colorAccent">#ff6d00</item>
         <item name="colorControlActivated">#33691e</item>
-        <item name="android:background">@color/aqi_orange</item>
+        <item name="android:background">@color/primary_variant_500</item>
         <item name="colorControlHighlight">#d50000</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 </resources>
