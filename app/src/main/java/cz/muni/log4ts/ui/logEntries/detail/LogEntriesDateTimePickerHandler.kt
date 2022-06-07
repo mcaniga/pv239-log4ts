@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import cz.muni.log4ts.R
 import cz.muni.log4ts.data.entities.LogEntry
 import cz.muni.log4ts.data.ui.PickedDateTime
 import cz.muni.log4ts.extension.toPickedDateTime
@@ -44,7 +45,7 @@ class LogEntriesDateTimePickerHandler @Inject constructor() {
             }
         }, 0, 0, true)
 
-        val datePicker = DatePickerDialog(context)
+        val datePicker = DatePickerDialog(context, R.style.MyAppTheme)
         datePicker.setOnDateSetListener { _, year, month, day ->
             run {
                 val date = LocalDate.of(year, month + 1, day)
