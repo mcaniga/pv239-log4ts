@@ -47,7 +47,7 @@ class LogEntriesDateTimePickerHandler @Inject constructor() {
         val datePicker = DatePickerDialog(context)
         datePicker.setOnDateSetListener { _, year, month, day ->
             run {
-                val date = LocalDate.of(year, month, day)
+                val date = LocalDate.of(year, month + 1, day)
                 pickedTimeToSet.date = date
                 Log.d("LogEntriesDateTimePickerHandler", date.toString())
                 timePicker.show()
