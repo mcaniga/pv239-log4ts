@@ -109,9 +109,10 @@ class LogEntriesDetailFragment : Fragment() {
 
     private fun initializeProjectSpinner(logEntry: LogEntry) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val projectSpinnerAdapter = projectSpinnerAdapterFactory.makeProjectSpinnerAdapter(
+            val projectSpinnerAdapter = projectSpinnerAdapterFactory.makeProjectSpinnerAdapterWithSelectedItem(
                 requireContext(),
-                firebaseProjectRepository
+                firebaseProjectRepository,
+                logEntry.project
             )
             binding.projectsSpinner.adapter = projectSpinnerAdapter
         }
