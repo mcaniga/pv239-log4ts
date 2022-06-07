@@ -63,7 +63,7 @@ class LogEntriesDetailFragment : Fragment() {
         val logEntry: LogEntry = extractLogEntryFromArgs()
         setBackButton(view)
         inicializeLogEntryName(logEntry)
-        initializeProjectSpinner()
+        initializeProjectSpinner(logEntry)
         initializeLogTimes(logEntry)
         initializePickedTime(logEntry)
         binding.editStartTimeButton.setOnClickListener {
@@ -107,7 +107,7 @@ class LogEntriesDetailFragment : Fragment() {
         return logDetailValidator.validateName(binding)
     }
 
-    private fun initializeProjectSpinner() {
+    private fun initializeProjectSpinner(logEntry: LogEntry) {
         viewLifecycleOwner.lifecycleScope.launch {
             val projectSpinnerAdapter = projectSpinnerAdapterFactory.makeProjectSpinnerAdapter(
                 requireContext(),

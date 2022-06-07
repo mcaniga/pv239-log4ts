@@ -7,6 +7,7 @@ import cz.muni.log4ts.dao.FirebaseProjectDao
 import cz.muni.log4ts.data.entities.NewProject
 import cz.muni.log4ts.data.entities.Project
 import cz.muni.log4ts.mapper.ProjectMapper
+import java.lang.RuntimeException
 import java.lang.String.format
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,12 +49,21 @@ class FirebaseProjectRepository @Inject constructor() : ProjectRepositoryInterfa
             TAG,
             String.format("Adding project %s to namespace %s", newProject, newProject.namespaceId)
         )
+        checkIfProjectAlreadyExists(newProject)
         val data: Map<String, Any> = mapper.makeFirebaseDataMapFromNewProject(newProject)
         Log.d(TAG, String.format("Made firebase data map: %s from given project", data))
         val projectDocument: DocumentReference =
             dao.addProjectDocument(newProject.namespaceId, data)
         Log.d(TAG, format("Successfully added the project, id: %s", projectDocument.id))
         return projectDocument.id
+    }
+
+    private suspend fun FirebaseProjectRepository.checkIfProjectAlreadyExists(
+        newProject: NewProject
+    ) {
+        if (getAllProjectsInNamespace(newProject.namespaceId).any { it.name == newProject.name }) {
+            throw IllegalArgumentException("Project with given name already exists")
+        }
     }
 
     override suspend fun updateProjectInNamespace(project: Project) {

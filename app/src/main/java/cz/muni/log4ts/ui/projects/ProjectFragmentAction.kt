@@ -22,7 +22,7 @@ class ProjectsFragmentAction @Inject constructor() {
             val project = newProject.toProject(projectId)
             recyclerViewAdapter.addProject(project)
         } catch (e: Exception) {
-            ErrorHandler.showErrorSnackbar(e, TAG, "Adding of project failed...", view)
+            ErrorHandler.showErrorSnackbar(e, TAG, e.message.toString(), view)
         }
     }
 
